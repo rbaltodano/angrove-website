@@ -869,7 +869,8 @@
       } },
       center: { icon: 'i-lines-measurement-horizontal', label: function () { return 'Center'; }, on: function () { if (mid.phase === 'active') setT(0.5, true); } },
       place: { icon: 'i-arrow-down', label: function () { return 'Place'; }, on: place },
-      reset: { icon: 'i-arrow-counterclockwise', label: function () { return 'Reset'; }, on: function () { if (mid.phase === 'done') reopen(); else resetAll(); } },
+      // Reset always returns to the whole tree with nothing selected, ready for Select.
+      reset: { icon: 'i-arrow-counterclockwise', label: function () { return 'Reset'; }, on: resetAll },
       how: { icon: 'i-graph-2d', label: function () { return 'How It Works'; }, on: function () { if (mid.phase === 'done') showVectors(true); } },
       tree: { icon: 'i-point-3-connected-trianglepath-dotted', label: function () { return 'Back to Tree'; }, on: function () { showVectors(false); } }
     };
