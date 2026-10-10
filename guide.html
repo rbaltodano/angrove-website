@@ -194,7 +194,7 @@
         
         <div class="guide-paras">
           <div><h3 class="guide-label">What it does</h3><p class="guide-text">The tree gathers your Insights around broader subjects called Node Concepts. Angrove adds a Node Concept when an answer opens up a new subject; Insights are only ever added by you.</p></div>
-          <div><h3 class="guide-label">How to use it</h3><p class="guide-text">Drag to move around, pinch to zoom, and tap anything to read its card. Tap <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-arrow-turn-down-right"/></svg>Ask</span> in the model controls to ask a question about the hovered Insight or Node Concept. Lines show which ideas are connected, and shorter lines mean the ideas are closer in meaning. <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-brain-head-profile"/></svg>Insights</span> in the menu has a larger tree that brings together everything you’ve saved; accept its update prompt to add your latest bookmarks.</p></div>
+          <div><h3 class="guide-label">How to use it</h3><p class="guide-text">Drag to move around, pinch to zoom, and tap anything to read its card. Tap <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-arrow-turn-down-right"/></svg>Ask</span> in the model controls to ask a question about the hovered Insight or Node Concept. Each Node Concept hangs from the subject it’s closest to, and shorter lines mean the ideas are closer in meaning. Fainter lines link a Midpoint to its other sources. <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-brain-head-profile"/></svg>Insights</span> in the menu has a larger tree that brings together everything you’ve saved; accept its update prompt to add your latest bookmarks. The number beside Insights in the menu counts saved Insights you haven’t seen there yet.</p></div>
           <div><h3 class="guide-label">When it helps</h3><p class="guide-text">Use the map to spot how several definitions belong to one larger question. Distance shows how related two ideas are, not whether they’re true or important.</p></div>
         </div>
               <div class="guide-tech">
@@ -207,14 +207,15 @@
           <div><h3 class="guide-label">Building the tree</h3>
             <ul class="guide-tech__list guide-tech__list--steps">
               <li><span class="guide-tech__num">1</span><span><b>Seed.</b> After each answer, Gemma names the subject of that turn with a short label and summary. Angrove embeds “label. summary”, and the subject becomes a new Node Concept only if its similarity to every existing subject is below 0.60, so ordinary follow-ups don’t create duplicates.</span></li>
-              <li><span class="guide-tech__num">2</span><span><b>Attach.</b> A saved Insight is compared with each Node Concept, using the higher of its similarity to the Node’s members (their mean embedding) and to the Node’s seeded subject. It joins the best match at 0.40 or above; otherwise it starts a Node of its own. Membership is sticky: once placed, an Insight keeps its Node as others come and go.</span></li>
-              <li><span class="guide-tech__num">3</span><span><b>Merge.</b> Node Concepts found separately fold together when their members reach 0.65 similarity, or their subjects (“label. definition”) reach 0.75. The subject bar is higher because a shared word inflates the score. The pair that clears its bar by the widest margin merges first, and the larger Node keeps its name and place.</span></li>
-              <li><span class="guide-tech__num">4</span><span><b>Name.</b> Gemma names each automatic Node Concept with the nearest broader concept, in one to five words. A name that repeats a member’s title, wraps it (“About…”, “Study of…”), or is a catch-all like “Philosophy” or “Ideas” is rejected, and the model gets one corrective retry.</span></li>
-              <li><span class="guide-tech__num">5</span><span><b>Lay out.</b> Classical multidimensional scaling turns the table of distances between Node Concepts into positions, at 900 points of canvas per unit of distance. The third axis becomes depth. A Procrustes fit aligns the new layout with the previous one to keep its orientation stable; overlapping Nodes are then nudged apart.</span></li>
-              <li><span class="guide-tech__num">6</span><span><b>Connect.</b> An Insight’s connector is 150 + 180·<i>n</i> points long, where <i>n</i> is its distance to the Node’s centroid rescaled from 0 to 1 within that Node, so the closest member always sits nearest.</span></li>
+              <li><span class="guide-tech__num">2</span><span><b>Attach.</b> A saved Insight is compared with each Node Concept, using the higher of its similarity to the Node’s members (their mean embedding) and to the Node’s subject. It joins the best match at 0.35 or above; otherwise it starts a Node of its own. At 0.50 or above it is a close member; between the two it hangs loosely. Membership is sticky: once placed, an Insight keeps its Node as others come and go.</span></li>
+              <li><span class="guide-tech__num">3</span><span><b>Bud.</b> When three or more of a Node’s loose Insights belong together (each at least 0.55 similar to the group’s own center, and closer to one another than to their Node), they bud off into a new Node Concept that hangs from the original. If they fit another existing Node better, they move there instead, so the same subject never appears twice.</span></li>
+              <li><span class="guide-tech__num">4</span><span><b>Merge.</b> Node Concepts found separately fold together when their Insights reach 0.65 similarity, or their subjects (“label. definition”) reach 0.75. The subject bar is higher because a shared word inflates the score. A Node with no Insights yet has only its name to compare, so it merges only on the subject bar. The pair that clears its bar by the widest margin merges first, and the larger Node keeps its name and place.</span></li>
+              <li><span class="guide-tech__num">5</span><span><b>Name.</b> Gemma names each automatic Node Concept with the nearest broader concept, in one to five words. A name that repeats a member’s title, wraps it (“About…”, “Study of…”), or is a catch-all like “Philosophy” or “Ideas” is rejected, and the model gets one corrective retry.</span></li>
+              <li><span class="guide-tech__num">6</span><span><b>Grow.</b> Each Node Concept hangs from exactly one parent: the Node whose subject is most similar to its own, chosen once and then kept. A Make Node, Branch, or Midpoint concept hangs from its source. The tree grows from its most central Node, and a new Node is placed off its parent in a direction where its line crosses no other line and stays clear of other Nodes, so adding a concept never rearranges the ones already there.</span></li>
+              <li><span class="guide-tech__num">7</span><span><b>Connect.</b> A line between two Node Concepts is (360 + 320·<i>d</i>) × 1.4 points long, where <i>d</i> is their distance, so more related subjects sit closer. An Insight’s connector is 150 + 180·<i>n</i> points long, where <i>n</i> is its distance to the Node’s centroid rescaled from 0 to 1 within that Node, so the closest member always sits nearest.</span></li>
             </ul></div>
           <figure class="guide-fig" data-mid-fig>
-<svg viewBox="0 0 560 150" role="img" aria-label="A cosine similarity scale from 0.3 to 0.8 with the tree's four cutoffs: 0.40, an Insight joins a Node Concept; 0.60, below this a new answer starts a new Node Concept; 0.65, Node Concepts whose members are this similar merge; 0.75, Node Concepts whose subjects are this similar merge.">
+<svg viewBox="0 0 560 150" role="img" aria-label="A cosine similarity scale from 0.3 to 0.8 with the tree's cutoffs: 0.35, an Insight attaches to a Node Concept; 0.50, it is a close member rather than a loose one; 0.60, below this a new answer starts a new Node Concept; 0.65, Node Concepts whose Insights are this similar merge; 0.75, Node Concepts whose subjects are this similar merge.">
 <path d="M40.0 78 L480.0 78" pathLength="1" class="tr-axis gf-grow" style="--d:0ms;--dur:700ms"/>
 <path d="M40 74 L40 82" class="tr-tick gf-fade" style="--d:400ms"/><text x="40" y="98" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:450ms">0.3</text>
 <path d="M128 74 L128 82" class="tr-tick gf-fade" style="--d:400ms"/><text x="128" y="98" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:450ms">0.4</text>
@@ -222,22 +223,25 @@
 <path d="M304 74 L304 82" class="tr-tick gf-fade" style="--d:400ms"/><text x="304" y="98" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:450ms">0.6</text>
 <path d="M392 74 L392 82" class="tr-tick gf-fade" style="--d:400ms"/><text x="392" y="98" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:450ms">0.7</text>
 <path d="M480 74 L480 82" class="tr-tick gf-fade" style="--d:400ms"/><text x="480" y="98" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:450ms">0.8</text>
-<path d="M128 40 L128 78" pathLength="1" class="tr-mark gf-grow" style="--d:900ms;--dur:350ms"/>
-<circle cx="128" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1050ms"/>
-<text x="128" y="32" text-anchor="middle" class="gf-t gs-small tr-lab gf-fade" style="--d:1100ms"><tspan class="tr-v">0.40</tspan>  Insight joins a Node</text>
-<path d="M304 78 L304 116" pathLength="1" class="tr-mark gf-grow" style="--d:1350ms;--dur:350ms"/>
-<circle cx="304" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1500ms"/>
-<text x="314" y="134" text-anchor="end" class="gf-t gs-small tr-lab gf-fade" style="--d:1550ms"><tspan class="tr-v">0.60</tspan>  new subject below this</text>
-<path d="M348 40 L348 78" pathLength="1" class="tr-mark gf-grow" style="--d:1800ms;--dur:350ms"/>
-<circle cx="348" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1950ms"/>
-<text x="348" y="32" text-anchor="middle" class="gf-t gs-small tr-lab gf-fade" style="--d:2000ms"><tspan class="tr-v">0.65</tspan>  members merge</text>
-<path d="M436 78 L436 116" pathLength="1" class="tr-mark gf-grow" style="--d:2250ms;--dur:350ms"/>
-<circle cx="436" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:2400ms"/>
-<text x="426" y="134" text-anchor="start" class="gf-t gs-small tr-lab gf-fade" style="--d:2450ms"><tspan class="tr-v">0.75</tspan>  subjects merge</text>
+<path d="M84 40 L84 78" pathLength="1" class="tr-mark gf-grow" style="--d:900ms;--dur:350ms"/>
+<circle cx="84" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1050ms"/>
+<text x="84" y="32" text-anchor="middle" class="gf-t gs-small tr-lab gf-fade" style="--d:1100ms"><tspan class="tr-v">0.35</tspan>  Insight attaches</text>
+<path d="M216 40 L216 78" pathLength="1" class="tr-mark gf-grow" style="--d:1350ms;--dur:350ms"/>
+<circle cx="216" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1500ms"/>
+<text x="216" y="32" text-anchor="middle" class="gf-t gs-small tr-lab gf-fade" style="--d:1550ms"><tspan class="tr-v">0.50</tspan>  close member</text>
+<path d="M304 78 L304 116" pathLength="1" class="tr-mark gf-grow" style="--d:1800ms;--dur:350ms"/>
+<circle cx="304" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:1950ms"/>
+<text x="314" y="134" text-anchor="end" class="gf-t gs-small tr-lab gf-fade" style="--d:2000ms"><tspan class="tr-v">0.60</tspan>  new subject below this</text>
+<path d="M348 40 L348 78" pathLength="1" class="tr-mark gf-grow" style="--d:2250ms;--dur:350ms"/>
+<circle cx="348" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:2400ms"/>
+<text x="348" y="32" text-anchor="middle" class="gf-t gs-small tr-lab gf-fade" style="--d:2450ms"><tspan class="tr-v">0.65</tspan>  Insights merge</text>
+<path d="M436 78 L436 116" pathLength="1" class="tr-mark gf-grow" style="--d:2700ms;--dur:350ms"/>
+<circle cx="436" cy="78" r="4.5" class="gf-tip gf-pop" style="--d:2850ms"/>
+<text x="426" y="134" text-anchor="start" class="gf-t gs-small tr-lab gf-fade" style="--d:2900ms"><tspan class="tr-v">0.75</tspan>  subjects merge</text>
 </svg></figure>
-          <div><h3 class="guide-label">From 384 dimensions to a map</h3><p class="guide-text">The semantic relationships live in 384-dimensional embedding space, but a screen can show a map in only two or three dimensions. Classical <em>multidimensional scaling</em> (MDS) is a projection technique: it starts with the pairwise semantic distances between concepts and finds 2D or 3D coordinates that approximate those relationships.</p><p class="guide-text">Imagine that Angrove already knows how far apart the concepts should be semantically. MDS tries to construct a map whose distances resemble that table as closely as the lower-dimensional representation allows. It preserves relationships between concepts, not the original meaning itself.</p><p class="guide-text">Under the hood, classical MDS squares the distances, double-centers the table to form a matrix of inner products, and uses the leading positive eigenvalues and their eigenvectors to calculate coordinates. It can reproduce distances exactly when they are Euclidean and fit in the chosen number of dimensions. Cosine distances need not meet that condition, so the displayed map is an approximation. The third coordinate supplies depth; flattening it onto the screen and nudging overlaps can further change visible spacing.</p></div>
+          <div><h3 class="guide-label">From distances to a tree</h3><p class="guide-text">Meaning lives in 384 dimensions, but a screen shows two. Squeezing every pairwise distance onto the page can’t be done faithfully, and it tangles the lines. Instead, Angrove keeps the single most meaningful relationship for each concept: the subject closest to it. Those links form a tree, which can always be drawn without crossings, and each line’s length still reflects a real semantic distance.</p></div>
           <figure class="guide-fig" data-mid-fig>
-<svg viewBox="0 0 580 260" role="img" aria-label="Left: a five by five table of cosine distances between five Node Concepts. Right: lower-dimensional positions calculated by classical multidimensional scaling to approximate the distance relationships in the table.">
+<svg viewBox="0 0 580 260" role="img" aria-label="Left: a five by five table of cosine distances between five Node Concepts. Right: the tree Angrove grows from it. Greek Philosophy, the most central, is the root; Natural Philosophy, Virtue, and Roman Republic hang from it, and Grace hangs from Virtue. Each line is longer for a larger distance, and no lines cross.">
 <text x="110" y="79" text-anchor="end" class="gf-t gs-small gf-fade" style="--d:0ms">Greek Philosophy</text>
 <text x="135" y="50" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:0ms">GP</text>
 <text x="110" y="113" text-anchor="end" class="gf-t gs-small gf-fade" style="--d:0ms">Virtue</text>
@@ -249,78 +253,71 @@
 <text x="110" y="215" text-anchor="end" class="gf-t gs-small gf-fade" style="--d:0ms">Roman Republic</text>
 <text x="271" y="50" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:0ms">RR</text>
 <rect x="119" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:150ms;fill-opacity:0.03"/>
-<rect x="153" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:185ms;fill-opacity:0.37"/>
+<rect x="153" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:185ms;fill-opacity:0.31"/>
 <text x="169" y="79" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:185ms">.30</text>
-<rect x="187" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:220ms;fill-opacity:0.39"/>
+<rect x="187" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:220ms;fill-opacity:0.33"/>
 <text x="203" y="79" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:220ms">.27</text>
-<rect x="221" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:255ms;fill-opacity:0.23"/>
+<rect x="221" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:255ms;fill-opacity:0.17"/>
 <text x="237" y="79" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:255ms">.52</text>
-<rect x="255" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:290ms;fill-opacity:0.31"/>
+<rect x="255" y="59" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:290ms;fill-opacity:0.25"/>
 <text x="271" y="79" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:290ms">.40</text>
-<rect x="119" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:325ms;fill-opacity:0.37"/>
+<rect x="119" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:325ms;fill-opacity:0.31"/>
 <text x="135" y="113" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:325ms">.30</text>
 <rect x="153" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:360ms;fill-opacity:0.03"/>
-<rect x="187" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:395ms;fill-opacity:0.23"/>
+<rect x="187" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:395ms;fill-opacity:0.17"/>
 <text x="203" y="113" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:395ms">.52</text>
-<rect x="221" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:430ms;fill-opacity:0.42"/>
+<rect x="221" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:430ms;fill-opacity:0.36"/>
 <text x="237" y="113" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:430ms">.23</text>
-<rect x="255" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:465ms;fill-opacity:0.20"/>
+<rect x="255" y="93" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:465ms;fill-opacity:0.14"/>
 <text x="271" y="113" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:465ms">.58</text>
-<rect x="119" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:500ms;fill-opacity:0.39"/>
+<rect x="119" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:500ms;fill-opacity:0.33"/>
 <text x="135" y="147" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:500ms">.27</text>
-<rect x="153" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:535ms;fill-opacity:0.23"/>
+<rect x="153" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:535ms;fill-opacity:0.17"/>
 <text x="169" y="147" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:535ms">.52</text>
 <rect x="187" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:570ms;fill-opacity:0.03"/>
-<rect x="221" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:605ms;fill-opacity:0.10"/>
+<rect x="221" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:605ms;fill-opacity:0.04"/>
 <text x="237" y="147" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:605ms">.73</text>
-<rect x="255" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:640ms;fill-opacity:0.20"/>
+<rect x="255" y="127" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:640ms;fill-opacity:0.14"/>
 <text x="271" y="147" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:640ms">.57</text>
-<rect x="119" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:675ms;fill-opacity:0.23"/>
+<rect x="119" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:675ms;fill-opacity:0.17"/>
 <text x="135" y="181" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:675ms">.52</text>
-<rect x="153" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:710ms;fill-opacity:0.42"/>
+<rect x="153" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:710ms;fill-opacity:0.36"/>
 <text x="169" y="181" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:710ms">.23</text>
-<rect x="187" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:745ms;fill-opacity:0.10"/>
+<rect x="187" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:745ms;fill-opacity:0.04"/>
 <text x="203" y="181" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:745ms">.73</text>
 <rect x="221" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:780ms;fill-opacity:0.03"/>
-<rect x="255" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:815ms;fill-opacity:0.07"/>
+<rect x="255" y="161" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:815ms;fill-opacity:0.03"/>
 <text x="271" y="181" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:815ms">.79</text>
-<rect x="119" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:850ms;fill-opacity:0.31"/>
+<rect x="119" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:850ms;fill-opacity:0.25"/>
 <text x="135" y="215" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:850ms">.40</text>
-<rect x="153" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:885ms;fill-opacity:0.20"/>
+<rect x="153" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:885ms;fill-opacity:0.14"/>
 <text x="169" y="215" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:885ms">.58</text>
-<rect x="187" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:920ms;fill-opacity:0.20"/>
+<rect x="187" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:920ms;fill-opacity:0.14"/>
 <text x="203" y="215" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:920ms">.57</text>
-<rect x="221" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:955ms;fill-opacity:0.07"/>
+<rect x="221" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:955ms;fill-opacity:0.03"/>
 <text x="237" y="215" text-anchor="middle" class="gf-t tm-num gf-fade" style="--d:955ms">.79</text>
 <rect x="255" y="195" width="32" height="32" rx="5" class="tm-cell gf-fade" style="--d:990ms;fill-opacity:0.03"/>
 <text x="203" y="248" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:1100ms">cosine distance, 1 − similarity</text>
 <path d="M300 140 L326 140" class="tm-arrow gf-grow" pathLength="1" style="--d:1300ms;--dur:400ms"/><path d="M320 135 L327 140 L320 145" class="tm-arrowhead gf-fade" style="--d:1600ms"/>
-<text x="313" y="128" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:1350ms">MDS</text>
-<path d="M409.9 129.0 L481.7 146.7" pathLength="1" class="tm-edge gf-grow" style="--d:2600ms;--dur:500ms"/>
-<path d="M409.9 129.0 L375.3 69.3" pathLength="1" class="tm-edge gf-grow" style="--d:2690ms;--dur:500ms"/>
-<path d="M409.9 129.0 L540.0 151.2" pathLength="1" class="tm-edge gf-grow" style="--d:2780ms;--dur:500ms"/>
-<path d="M409.9 129.0 L350.0 210.7" pathLength="1" class="tm-edge gf-grow" style="--d:2870ms;--dur:500ms"/>
-<path d="M481.7 146.7 L375.3 69.3" pathLength="1" class="tm-edge gf-grow" style="--d:2960ms;--dur:500ms"/>
-<path d="M481.7 146.7 L540.0 151.2" pathLength="1" class="tm-edge gf-grow" style="--d:3050ms;--dur:500ms"/>
-<path d="M481.7 146.7 L350.0 210.7" pathLength="1" class="tm-edge gf-grow" style="--d:3140ms;--dur:500ms"/>
-<path d="M375.3 69.3 L540.0 151.2" pathLength="1" class="tm-edge gf-grow" style="--d:3230ms;--dur:500ms"/>
-<path d="M375.3 69.3 L350.0 210.7" pathLength="1" class="tm-edge gf-grow" style="--d:3320ms;--dur:500ms"/>
-<path d="M540.0 151.2 L350.0 210.7" pathLength="1" class="tm-edge gf-grow" style="--d:3410ms;--dur:500ms"/>
-<circle cx="409.9" cy="129.0" r="5" class="gf-src gf-pop" style="--d:1800ms"/>
-<text x="409.9" y="117.0" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:1900ms">Greek Philosophy</text>
-<circle cx="481.7" cy="146.7" r="5" class="gf-src gf-pop" style="--d:1960ms"/>
-<text x="481.7" y="166.7" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:2060ms">Virtue</text>
-<circle cx="375.3" cy="69.3" r="5" class="gf-src gf-pop" style="--d:2120ms"/>
-<text x="385.3" y="73.3" text-anchor="start" class="gf-t gs-small tm-name gf-fade" style="--d:2220ms">Natural Philosophy</text>
-<circle cx="540.0" cy="151.2" r="5" class="gf-src gf-pop" style="--d:2280ms"/>
-<text x="540.0" y="171.2" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:2380ms">Grace</text>
-<circle cx="350.0" cy="210.7" r="5" class="gf-src gf-pop" style="--d:2440ms"/>
-<text x="360.0" y="214.7" text-anchor="start" class="gf-t gs-small tm-name gf-fade" style="--d:2540ms">Roman Republic</text>
+<text x="313" y="128" text-anchor="middle" class="gf-t gs-small gf-fade" style="--d:1350ms">grow</text>
+<path d="M430.0 128.0 L399.6 62.9" pathLength="1" class="tm-edge gf-grow" style="--d:1800ms;--dur:500ms"/>
+<path d="M430.0 128.0 L500.9 147.0" pathLength="1" class="tm-edge gf-grow" style="--d:1960ms;--dur:500ms"/>
+<path d="M500.9 147.0 L541.0 204.2" pathLength="1" class="tm-edge gf-grow" style="--d:2120ms;--dur:500ms"/>
+<path d="M430.0 128.0 L396.8 199.2" pathLength="1" class="tm-edge gf-grow" style="--d:2280ms;--dur:500ms"/>
+<circle cx="430.0" cy="128.0" r="5" class="gf-src gf-pop" style="--d:1800ms"/>
+<text x="440.0" y="120.0" text-anchor="start" class="gf-t gs-small tm-name gf-fade" style="--d:1900ms">Greek Philosophy</text>
+<circle cx="399.6" cy="62.9" r="5" class="gf-src gf-pop" style="--d:1960ms"/>
+<text x="409.6" y="66.9" text-anchor="start" class="gf-t gs-small tm-name gf-fade" style="--d:2060ms">Natural Philosophy</text>
+<circle cx="500.9" cy="147.0" r="5" class="gf-src gf-pop" style="--d:2120ms"/>
+<text x="500.9" y="167.0" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:2220ms">Virtue</text>
+<circle cx="541.0" cy="204.2" r="5" class="gf-src gf-pop" style="--d:2280ms"/>
+<text x="541.0" y="224.2" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:2380ms">Grace</text>
+<circle cx="396.8" cy="199.2" r="5" class="gf-src gf-pop" style="--d:2440ms"/>
+<text x="396.8" y="219.2" text-anchor="middle" class="gf-t gs-small tm-name gf-fade" style="--d:2540ms">Roman Republic</text>
 </svg>
-<figcaption class="gs-cap">Illustrative distances. The positions on the right are the actual classical-MDS solution for this table; projected spacing approximates its relationships.</figcaption>
+<figcaption class="gs-cap">Illustrative distances. On the right is the tree Angrove grows from this table: each concept hangs from its closest subject, and line lengths follow the distances.</figcaption>
 </figure>
-          <div><h3 class="guide-label">Why a valid layout can turn or flip</h3><p class="guide-text">MDS cares about relative distances, not absolute orientation. Rotate an entire triangle and every distance between its vertices stays the same. Reflect it, as in a mirror, and those distances still stay the same. Two layouts can therefore be mathematically equivalent even when one looks rotated or reflected.</p><p class="guide-text">MDS does not intentionally rotate the tree to preserve distance. Rotation and reflection are ambiguities of the solution: the distance table alone cannot tell the algorithm which orientation should face the viewer.</p></div>
-          <div><h3 class="guide-label">Keeping the map steady with Procrustes</h3><p class="guide-text">After MDS calculates a geometrically valid layout, <em>Procrustes alignment</em> compares its coordinates with the previous layout’s coordinates for the same concepts. It finds an alignment that minimizes the mismatch between corresponding old and new points while preserving the geometry produced by MDS.</p><p class="guide-text">MDS determines the layout; Procrustes aligns it to the one you were already viewing. This prevents unnecessary spinning, flipping, or jumping when the tree is recalculated. Adding concepts can still change the geometry, so alignment keeps the orientation steady without freezing every point in place.</p><p class="guide-text">Cosine similarity determines semantic relationships → MDS turns those relationships into displayable coordinates → Procrustes keeps successive layouts visually stable.</p></div>
+          <div><h3 class="guide-label">Keeping the map steady</h3><p class="guide-text">Parents and positions are saved, so a new concept joins the existing tree instead of setting off a fresh layout, and what you’ve already seen stays where it was. If two lines ever end up crossing, the smaller branch turns around the Node it hangs from until they clear; turning keeps every line’s length. A Midpoint can join concepts from different branches, so its lines to its other sources are drawn fainter, letting the tree read first.</p></div>
         </div></div>
         </div>
       <div class="demo-videos">
@@ -390,7 +387,7 @@
 </div>
         </div>
         <div class="guide-paras">
-          <div><h3 class="guide-label">What it does</h3><p class="guide-text">Midpoint finds a concept between the ideas you select, leaning toward the ones you give more weight.</p></div>
+          <div><h3 class="guide-label">What it does</h3><p class="guide-text">Midpoint finds a concept between the ideas you select, leaning toward the ones you give more weight. The result joins your tree as a new Node Concept, and the Insights you chose move under it.</p></div>
           <div><h3 class="guide-label">How to use it</h3><p class="guide-text">In the tree, tap <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-circle-dashed"/></svg>Select</span>, choose two to eight Insights or Node Concepts, then tap <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-graph-2d"/></svg>Midpoint</span>. Change the percentages to lean toward the ideas that matter most, then tap <span class="ui-btn"><svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg>Place</span> to add the result to your tree.</p></div>
           <div><h3 class="guide-label">When it helps</h3><p class="guide-text">Try a Midpoint between “justice” and “mercy” to see how they meet. The result depends on the ideas you choose and how you balance them.</p></div>
         </div>
@@ -403,7 +400,7 @@
               <li><span class="guide-tech__num">2</span><span><b>Normalize sources.</b> Divide each source vector by its magnitude to get a unit vector <i>â</i>ᵢ. This keeps its direction and gives every source magnitude 1, so your weights control its influence in the blend.</span></li>
               <li><span class="guide-tech__num">3</span><span><b>Weight.</b> Your percentages become <i>w</i>ᵢ = <i>p</i>ᵢ / Σ<i>p</i>, with negatives clipped to zero, across two to eight sources.</span></li>
               <li><span class="guide-tech__num">4</span><span><b>Blend and normalize again.</b> Add the weighted unit vectors to form <i>s</i>, the weighted centroid. Divide this blend by its magnitude to get the target unit vector <i>ĉ</i>, preserving its new semantic direction.</span></li>
-              <li><span class="guide-tech__num">5</span><span><b>Generate.</b> Gemma 4 E4B, on device, receives each source’s title, definition, and weight, and returns five candidate Insights as JSON.</span></li>
+              <li><span class="guide-tech__num">5</span><span><b>Generate.</b> Gemma 4 E4B, on device, receives each source’s title, definition, and weight, and returns five candidate concepts as JSON.</span></li>
               <li><span class="guide-tech__num">6</span><span><b>Validate and select.</b> Each candidate’s title and definition are embedded the same way and normalized, giving <i>ê</i>ⱼ. Angrove compares them with the target and keeps the one with the smallest cosine distance. Its concept and definition are presented to you. If any embedding fails, it falls back to the model’s first candidate.</span></li>
             </ul>
             <p class="guide-text">The first expression builds the target direction; the second chooses the candidate closest to it. Here Σ means “add across the sources,” and <i>j</i>* is the selected candidate’s index.</p>
