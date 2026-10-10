@@ -879,6 +879,11 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   50% { transform: translateY(-26px); opacity: 0.5; animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1); }
 }
 /* A placed Midpoint: the hollow loading bubble flashes, then dissolves as the title glides in. */
+/* A placed Midpoint is a Node Concept: its symbol flashes while it generates, then the name
+   glides in. */
+.it-node--placed:not(.is-revealed) span { display: none; }
+.it-node--placed:not(.is-revealed) img { animation: it-flash 0.9s ease-in-out infinite alternate; }
+.it-node--placed.is-revealed span { animation: glide-in 0.22s ease-out both; }
 .it-chip--placed .it-chip__label { display: none; align-items: center; gap: 10px; }
 .it-chip__loading {
   width: 14px;
@@ -2587,7 +2592,7 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   .journey__scene, .journey .jw { transition: none; }
   .flow .fw, .flow-insight, .flow-insight__body { transition: none; }
   .journey .jw { opacity: 1; filter: none; }
-  .spin, .private__dot, .tasks .active .state, .glide-in, .it-handle img, .it-chip__loading, .it-chip.is-selected::after, .mid-card, .mid-card__body { animation: none; }
+  .spin, .private__dot, .tasks .active .state, .glide-in, .it-handle img, .it-chip__loading, .it-node--placed img, .it-node--placed span, .it-chip.is-selected::after, .mid-card, .mid-card__body { animation: none; }
   .mid-dock__status.is-thinking { animation: none; color: rgba(74, 50, 28, 0.5); background: none; }
   .it-chip--placed.is-revealed .it-chip__loading { display: none; }
   .shimmer { animation: none; color: rgba(74, 50, 28, 0.5); background: none; }

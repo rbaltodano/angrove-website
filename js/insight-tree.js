@@ -368,6 +368,7 @@
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
 
   function treePoint(ins) {
+    if (ins.xfer) return xferWorld(ins);
     return [Math.cos(ins.ang.v) * ins.bond + (ins.cl2 ? CL2_X : 0), Math.sin(ins.ang.v) * ins.bond + (ins.cl2 ? CL2_Y : 0), 0];
   }
   function panTo(x, y) { var now = performance.now(); state.panX.to(x, 0, now); state.panY.to(y, 0, now); }
@@ -695,18 +696,27 @@
       setFade(0);
       mid.shown.to(0, 0, now);
       select(false);
-      var chip = document.createElement('div');
-      chip.className = 'it-chip it-chip--placed';
-      chip.innerHTML = '<svg class="it-chip__loading" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.25.6h7.5c.9 0 1.65.75 1.65 1.65V7.5c0 .9-.75 1.65-1.65 1.65H6.9L3.6 11.4V9.15H2.25C1.35 9.15.6 8.4.6 7.5V2.25C.6 1.35 1.35.6 2.25.6z"/></svg>'
-        + '<span class="it-chip__label"><img src="' + ICON + '" alt=""><span>' + (guide ? (q('example-title').textContent || 'A new concept') : 'Synderesis') + '</span></span><i class="it-chip__dot"></i>';
-      layer.appendChild(chip);
-      mid.placed = { el: chip, world: world, vis: new Spring(0), title: guide ? (q('example-title').textContent || 'A new concept') : '', body: guide ? q('example-body').textContent : '' };
+      // The result is a Node Concept. While it generates, only its symbol shows, flashing at
+      // the finished Node Concept's size; the name arrives with the ripple.
+      var chip = el('it-node it-node--placed', node.el.querySelector('img').src,
+        guide ? (q('example-title').textContent || 'A new concept') : 'Synderesis');
+      var sources = [A, B];
+      mid.placed = { el: chip, world: world, vis: new Spring(0), sources: sources,
+        parents: sources.map(function (s) { return s.cl2 ? node2 : node; }).filter(function (n, i, all) { return n && all.indexOf(n) === i; }),
+        title: guide ? (q('example-title').textContent || 'A new concept') : '', body: guide ? q('example-body').textContent : '' };
       mid.placed.vis.to(1, 0, now);
       if (!guide) panTo(world[0], world[1]);
       // scheduleMidpointReveal: a 3.5 s minimum of loading, then the ripple and the title.
       later(reduceMotion ? 0 : 3500, function () {
         ripple(world, 2.8, 0.5);
         chip.classList.add('is-revealed');
+        // Each source Insight leaves its old Node Concept for the new one, on its own side.
+        var start = performance.now();
+        sources.forEach(function (s) {
+          // Turned 60° off the line back to its former Node Concept, so the two never overlap.
+          var from = treePoint(s), a = Math.atan2(from[1] - world[1], from[0] - world[0]) + Math.PI / 3;
+          s.xfer = { from: from, to: [world[0] + Math.cos(a) * BOND, world[1] + Math.sin(a) * BOND], start: start };
+        });
         mid.phase = 'revealed';
         later(reduceMotion ? 0 : 650, function () {
           mid.phase = 'done';
@@ -718,8 +728,14 @@
       sync();
     }
 
+    function unplace() {
+      if (!mid.placed) return;
+      mid.placed.sources.forEach(function (s) { s.xfer = null; });
+      mid.placed.el.remove();
+      mid.placed = null;
+    }
     function reset() {
-      if (mid.placed) { mid.placed.el.remove(); mid.placed = null; }
+      unplace();
       result.hidden = true;
       setT(0.5, false);
       enter();
@@ -776,6 +792,11 @@
       docked.hidden = !ins || same;
       docked.dataset.title = ins && !same ? ins.title : '';
       if (ins && !same) {
+        var icon = docked.querySelector('.mid-card__title img');
+        if (icon) {
+          if (!icon.dataset.insight) icon.dataset.insight = icon.src;
+          icon.src = ins.node ? node.el.querySelector('img').src : icon.dataset.insight;
+        }
         q('docked-title').textContent = ins.title;
         q('docked-body').textContent = ins.body || GUIDE_DEFS[ins.title] || '';
         // Replay the entrance for each new card.
@@ -951,7 +972,7 @@
     }
     // Reset: clears the selection and any placed Midpoint, and returns to the whole tree.
     function resetAll() {
-      if (mid.placed) { mid.placed.el.remove(); mid.placed = null; }
+      unplace();
       mid.vec.on = false; mid.vec.k = mid.vec.kFrom = mid.vec.kTo = 0;
       root.classList.remove('is-vectors');
       selecting = false; picked = [];
@@ -962,7 +983,7 @@
     // balance, without replaying the opening script.
     function reopen() {
       var t = mid.t.target;
-      if (mid.placed) { mid.placed.el.remove(); mid.placed = null; }
+      unplace();
       mid.vec.on = false; mid.vec.k = mid.vec.kFrom = mid.vec.kTo = 0;
       root.classList.remove('is-vectors');
       dock(null);
@@ -988,7 +1009,7 @@
         if (mid.phase === 'done' && mid.placed) {
           var pr = mid.placed.el.getBoundingClientRect();
           var onChip = e.clientX >= pr.left - 6 && e.clientX <= pr.right + 6 && e.clientY >= pr.top - 6 && e.clientY <= pr.bottom + 6;
-          dock(onChip ? { title: mid.placed.title, body: mid.placed.body } : null);
+          dock(onChip ? { title: mid.placed.title, body: mid.placed.body, node: true } : null);
           return;
         }
         if (mid.phase !== 'idle') return;
@@ -1106,7 +1127,19 @@
     };
   }
 
+  // A Midpoint's source Insights move to the new Node Concept, as in the app: the new line
+  // grows out to the Insight, the old parent line fades, then the Insight springs into orbit.
+  var XFER_GROW = 450, XFER_FADE = [300, 750], XFER_PULL = [600, 1500];
+  function xferK(ins, span) {
+    if (reduceMotion) return 1;
+    return clamp((performance.now() - ins.xfer.start - span[0]) / (span[1] - span[0]), 0, 1);
+  }
+  function xferWorld(ins) {
+    var x = ins.xfer, k = backOut(xferK(ins, XFER_PULL));
+    return [lerp(x.from[0], x.to[0], k), lerp(x.from[1], x.to[1], k), 0];
+  }
   function insightWorld(ins, p) {
+    if (ins.xfer) return xferWorld(ins);
     var h = ins.bond;
     var a = ins.ang.v, e = ins.elv.v;
     var tree = [Math.cos(a) * h + (ins.cl2 ? CL2_X : 0), Math.sin(a) * h + (ins.cl2 ? CL2_Y : 0), h * Math.tan(e)];
@@ -1246,8 +1279,8 @@
   var VEC_CAPS = [
     [0, 'Each Insight becomes an arrow from the origin, pointing toward its meaning.'],
     [VEC_T.center, 'Your percentages blend the arrows into one direction: an Unknown Concept, with no words yet.'],
-    [VEC_T.cands, 'The model writes five candidate Insights near that direction.'],
-    [VEC_T.pick, 'The candidate closest to the Unknown Concept becomes your new Insight.']
+    [VEC_T.cands, 'The model writes five candidate concepts near that direction.'],
+    [VEC_T.pick, 'The candidate closest to the Unknown Concept becomes your new Node Concept.']
   ];
   var LABEL_FONT = getComputedStyle(root).fontFamily;
   function backOut(x) { x = clamp(x, 0, 1) - 1; return 1 + 2.70158 * x * x * x + 1.70158 * x * x; }
@@ -1484,6 +1517,7 @@
       styleEl(node2.el, node2Proj.x, node2Proj.y, f.ui * node2Proj.scale, nv2 * rest, (1 - nv2) * 24, (1 - nv2) * 8, 10);
     }
     ctx.lineWidth = 1;
+    var placedProj = mid && mid.placed ? project(cam, mid.placed.world) : null;
     insights.forEach(function (ins) {
       var world = insightWorld(ins, p);
       var np = ins.cl2 && node2Proj ? node2Proj : nodeProj;
@@ -1493,6 +1527,21 @@
       var behind = smoothstep(-0.25 * BOND, 0.25 * BOND, pr.depth - nodeProj.depth) * p;
       var dim = 1 - 0.4 * behind;
 
+      if (ins.xfer && placedProj) {
+        var xa = 0.22 * dim * rest;
+        var oldA = xa * (1 - xferK(ins, XFER_FADE));
+        var gx = 1 - Math.pow(1 - xferK(ins, [0, XFER_GROW]), 5);
+        ctx.lineCap = 'round';
+        if (oldA > 0.002) {
+          ctx.strokeStyle = 'rgba(' + BROWN + ',' + oldA.toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(np.x, np.y); ctx.lineTo(pr.x, pr.y); ctx.stroke();
+        }
+        if (gx > 0.001) {
+          ctx.strokeStyle = 'rgba(' + BROWN + ',' + xa.toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(placedProj.x, placedProj.y);
+          ctx.lineTo(lerp(placedProj.x, pr.x, gx), lerp(placedProj.y, pr.y, gx)); ctx.stroke();
+        }
+      } else
       // Connector drawn out from the Node Concept to the chip once the chip has landed.
       if (ins.lineStart !== null) {
         var g = clamp((now - ins.lineStart) / (CONNECTOR_GROW * 1000), 0, 1);
@@ -1546,15 +1595,19 @@
       mid.handle.style.opacity = clamp(hv, 0, 1).toFixed(3);
       mid.handle.style.visibility = hv > 0.01 ? 'visible' : 'hidden';
 
-      // A placed Midpoint: lines to both of its sources, and its chip pinned where it was placed.
+      // A placed Midpoint: a Node Concept linked to its sources' former Node Concepts.
       if (mid.placed) {
         var pv = clamp(mid.placed.vis.v, 0, 1);
         var pp = project(cam, mid.placed.world);
-        ctx.strokeStyle = 'rgba(' + BROWN + ',' + (0.22 * pv * rest).toFixed(3) + ')';
+        // Its lines appear with its name, once generation finishes.
+        var linked = mid.phase === 'loading' ? 0 : 1;
+        ctx.strokeStyle = 'rgba(' + BROWN + ',' + (0.22 * pv * rest * linked).toFixed(3) + ')';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(pa.x, pa.y); ctx.lineTo(pp.x, pp.y);
-        ctx.moveTo(pb.x, pb.y); ctx.lineTo(pp.x, pp.y);
+        mid.placed.parents.forEach(function (parent) {
+          var o = parent === node2 ? node2Proj : nodeProj;
+          if (o) { ctx.moveTo(o.x, o.y); ctx.lineTo(pp.x, pp.y); }
+        });
         ctx.stroke();
         if (vg && mid.vec.revealed) {
           // Revealed in the diagram: it pops in at the nearest candidate, and rides back on exit.
