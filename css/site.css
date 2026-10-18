@@ -1114,22 +1114,13 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
 .listen-card__ring, .listen-card.is-playing .listen-card__play { display: none; }
 .listen-card.is-playing .listen-card__ring { display: block; }
 .listen-card__art { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; pointer-events: none; }
-/* The card being read aloud leads the shelf (js/listen-shelf.js moves it); its ring
-   pops in and its pill breathes. */
-.listen-card.is-playing { z-index: 1; }
-/* Cards are all the same size; hovering one eases it to 0.95x on the app's menu curve. */
+/* Selection grows the card in place without changing the shelf's layout. */
 .listen-card { cursor: pointer; transition: transform 0.15s cubic-bezier(0.55, 0, 0.17, 1); }
-.listen-card.is-playing { cursor: default; }
+.listen-card.is-playing { z-index: 1; transform: scale(1); cursor: default; }
 .listen-card.is-playing .listen-card__pill { cursor: pointer; }
-@media (hover: hover) {
-  .listen-card:not(.is-playing):hover { z-index: 1; transform: scale(0.95); }
+@media (prefers-reduced-motion: reduce) {
+  .listen-card { transition: none; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .listen-card.is-playing .listen-card__ring { animation: listen-ring-in 0.4s cubic-bezier(0.55, 0, 0.17, 1); }
-  .listen-card.is-playing .listen-card__pill { animation: listen-breathe 2.4s ease-in-out infinite; }
-}
-@keyframes listen-ring-in { from { opacity: 0; transform: scale(0.3); } }
-@keyframes listen-breathe { 50% { box-shadow: 0 0 0 6px rgba(134, 128, 62, 0.12); } }
 @media (max-width: 1280px) {
   .listen__shelf { grid-template-columns: repeat(2, 1fr); }
   .listen-card { min-height: 280px; }
@@ -1138,9 +1129,7 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   .listen { margin-top: 80px; }
   .listen__head { flex-direction: column; align-items: stretch; gap: 16px; }
 }
-/* Phones: the shelf is an endless sideways loop (js/listen-shelf.js adds copies of the cards
-   and drifts it along); it can still be swiped either way. Copies only exist on phones. */
-.listen-card[data-copy] { display: none; }
+/* Phones: swipe through the cards in their original order. */
 @media (max-width: 560px) {
   .listen__shelf {
     display: flex;
@@ -1152,9 +1141,6 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   }
   .listen__shelf::-webkit-scrollbar { display: none; }
   .listen-card { flex: 0 0 82%; min-height: 250px; }
-  .listen-card[data-copy] { display: block; }
-  /* Sub-pixel remainder of the drift (js/listen-shelf.js). */
-  .listen-card { translate: var(--drift, 0) 0; }
 }
 
 /* ThinkingShimmer: a bright band (half-width 40% of the text) sweeps left to right for 1 s,
