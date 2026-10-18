@@ -1735,18 +1735,16 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
 .harness__next h3 { font-family: var(--serif); font-weight: 400; font-size: 32px; line-height: 1.3; letter-spacing: -0.03em; color: var(--heading); }
 .harness__next h3 em { font-style: italic; color: var(--light-green); }
 
-/* About: the mission. A dark inset panel and the page's one loud moment: the argument reads on
-   the left, and four refusals stack on the right, vertically centered, as a ruled list closing on the promise. */
-.mission { display: flex; align-items: stretch; gap: 84px; padding: 96px 72px; border-radius: 32px; background: var(--canvas-dark); color: rgba(255, 250, 240, 0.75); }
-.mission__copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
-.mission__copy > .eyebrow { margin-bottom: -8px; }
-.mission .display { font-size: clamp(36px, 4vw, 56px); line-height: 1.2; color: var(--cream); }
+/* About: the mission. A full-width heading, two balanced essay columns, and a
+   closing row of commitments keep the dark panel compact. */
+.mission { display: flex; flex-direction: column; gap: 40px; padding: 72px; border-radius: 32px; background: var(--canvas-dark); color: rgba(255, 250, 240, 0.75); }
+.mission__head { display: flex; flex-direction: column; gap: 16px; }
+.mission .display { max-width: 900px; font-size: clamp(36px, 4vw, 56px); line-height: 1.2; color: var(--cream); }
 .mission .display em { color: var(--dark-green-text); }
-.mission__text { max-width: 520px; display: flex; flex-direction: column; gap: 20px; font-size: 17px; line-height: 1.75; }
-.mission__vows { flex: 1; min-width: 0; list-style: none; align-self: center; font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.35; letter-spacing: -0.02em; color: rgba(255, 250, 240, 0.6); }
-.mission__vows li:first-child { padding-top: 0; }
-.mission__vows li { padding: 28px 0; border-bottom: 1px solid rgba(255, 250, 240, 0.14); }
-.mission__vows .mission__yours { font-style: italic; color: var(--dark-green-text); border-bottom: 0; padding-bottom: 0; }
+.mission__copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.mission__text { display: flex; flex-direction: column; gap: 20px; font-size: 17px; line-height: 1.75; }
+.mission__vows { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding-top: 32px; border-top: 1px solid rgba(255, 250, 240, 0.14); list-style: none; font-family: var(--serif); font-size: clamp(22px, 2vw, 28px); line-height: 1.35; letter-spacing: -0.02em; color: rgba(255, 250, 240, 0.6); }
+.mission__vows .mission__yours { font-style: italic; color: var(--dark-green-text); }
 
 /* About: the source. A repository listing: path, what it holds, its stack, and a way in. */
 .source-head { width: 647px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -1773,22 +1771,26 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
 
 @media (max-width: 1280px) {
   .harness { gap: 56px; }
-  .mission { gap: 56px; padding: 72px 48px; }
+  .mission { padding: 64px 48px; }
+  .mission__copy { gap: 40px; }
   .harness__head { width: 340px; }
   .source-head { width: auto; flex: 1; }
 }
 @media (max-width: 1024px) {
   .harness { flex-direction: column; gap: 40px; }
-  .mission { flex-direction: column; gap: 48px; }
-  .mission__vows { align-self: stretch; }
+  .mission__vows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .harness__head { position: static; width: auto; max-width: 640px; }
   .repo-row { grid-template-columns: 1fr auto 16px; row-gap: 8px; }
   .repo-row__path { grid-column: 1 / -1; }
   .repo-row__body { grid-column: 1; }
 }
 @media (max-width: 560px) {
-  .mission { padding: 64px 24px; border-radius: 24px; }
+  .mission { gap: 32px; padding: 40px 24px; border-radius: 24px; }
+  .mission__copy { grid-template-columns: 1fr; gap: 20px; }
+  .mission__vows { grid-template-columns: 1fr; gap: 0; padding-top: 8px; }
   .mission__vows li { padding: 20px 0; }
+  .mission__vows li + li { border-top: 1px solid rgba(255, 250, 240, 0.14); }
+  .mission__vows li:last-child { padding-bottom: 0; }
   .harness__lead { font-size: 21px; }
   .harness__quote { padding-left: 20px; font-size: 22px; }
   .repo-row { grid-template-columns: 1fr 16px; padding: 24px; }
