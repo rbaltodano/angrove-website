@@ -101,7 +101,7 @@ start with the oldest experiments. The existing URL remains `case-study.html`.
 ## Availability and engineering references
 
 The iPhone beta is open on TestFlight at https://testflight.apple.com/join/qHDFeAUa.
-All download buttons use “Download the Beta”; the App Store release is next.
+All download buttons use “Download the iOS Beta”; the App Store release is next.
 The homepage hero also shows macOS availability as “COMING DEC. 15” above “Download for macOS” in a non-clickable secondary outline.
 
 About and Case Studies link to the site's existing engineering explanations.
