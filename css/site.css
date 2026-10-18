@@ -184,7 +184,7 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
 @media (hover: hover) {
   .btn-pill:hover, .btn-block:hover { scale: 1.05; }
 }
-/* Download buttons: iOS, and Mac marked Coming Soon. The Mac button is not a link and doesn't grow. */
+/* Download buttons: the iPhone beta is live; Mac remains Coming Soon. The Mac button is not a link and doesn't grow. */
 .cta-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 12px; }
 .btn-pill.is-soon, .btn-block.is-soon {
   flex-direction: column;
