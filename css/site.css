@@ -1418,6 +1418,11 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   line-height: 1.5;
 }
 
+/* Dated macOS availability uses the same green capsule without link behavior. */
+.btn-upcoming { flex-direction: column; gap: 2px; padding: 14px 36px; cursor: default; }
+.btn-upcoming small { font-size: 10px; line-height: 1.2; font-weight: 700; }
+@media (hover: hover) { .btn-upcoming:hover { scale: none; } }
+
 /* ---------- Footer ---------- */
 
 /* Footer: an inset panel in the app's dark brown, with the light logo, ending in an oversized
