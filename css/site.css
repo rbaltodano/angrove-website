@@ -184,24 +184,8 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
 @media (hover: hover) {
   .btn-pill:hover, .btn-block:hover { scale: 1.05; }
 }
-/* Download buttons: the iPhone beta is live; Mac remains Coming Soon. The Mac button is not a link and doesn't grow. */
+/* Download buttons share the open iPhone beta call to action. */
 .cta-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 12px; }
-.btn-pill.is-soon, .btn-block.is-soon {
-  flex-direction: column;
-  gap: 2px;
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px rgba(134, 128, 62, 0.45);
-  color: var(--light-green);
-  cursor: default;
-  user-select: none;
-}
-.btn-pill.is-soon { padding-block: 14px; }
-.btn-block.is-soon { display: inline-flex; align-items: center; justify-content: center; padding-block: 14px; }
-.cta .btn-block.is-soon { background: transparent; color: var(--light-green); }
-.is-soon small { font-size: 10px; font-weight: 700; letter-spacing: 0; text-transform: uppercase; opacity: 0.8; }
-@media (hover: hover) {
-  .btn-pill.is-soon:hover, .btn-block.is-soon:hover { scale: none; }
-}
 @media (max-width: 560px) {
   .cta-row { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
 }

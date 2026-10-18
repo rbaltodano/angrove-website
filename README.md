@@ -98,26 +98,17 @@ and engineering decisions. Measured evaluation and earlier model exploration fol
 evidence, with next steps last. Dates preserve the chronology of the work without making readers
 start with the oldest experiments. The existing URL remains `case-study.html`.
 
-## Engineering showcase transition
+## Availability and engineering references
 
-The full app is no longer promoted as a public source checkout. About and Case Studies
-describe the separate engineering showcase as **in preparation**. Its planned scope is a
-dated, tested, runnable Midpoint/Insight Tree embedding slice with sample data and technical
-notes. No showcase repository URL is configured yet; the current CTA goes to the site's
-engineering explanation, and requests for fuller evidence go to Ryan's review contact.
+The iPhone beta is open on TestFlight at https://testflight.apple.com/join/qHDFeAUa.
+All download buttons use “Download the Beta”; the App Store release is next.
+Do not show unavailable platform download placeholders.
 
-When the actual showcase is published, replace the About showcase card's internal link
-and the Case Studies hero's engineering CTA with the confirmed URL and update the
-availability wording. The showcase will be deliberately refreshed when version 1.0 is
-approved; there is no automatic sync. This wording change does not change repository
-visibility or claim that version 1.0 is approved.
-
-The Foundations link now points to the local Case Studies engineering decisions; the
-proposed visibility plan can make both the app and Foundations private without breaking
-website links. Backend remains a separate supporting offline-tooling link; its visibility
-is outside this change. The résumé download and editable sources now link to the existing Case Studies page
-and describe an independent iOS project. They do not claim the app is open source or
-that the planned showcase has been published.
+About and Case Studies link to the site's existing engineering explanations.
+Full-source review is available through Ryan's review contact. Backend remains a
+separate supporting offline-tooling link. These references do not claim that the
+full app or a separate implementation showcase is publicly available as source.
+The résumé download and editable sources describe the open TestFlight beta.
 
 ## App demo recordings
 

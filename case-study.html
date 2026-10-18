@@ -23,7 +23,7 @@
 <link rel="canonical" href="https://angrove.app/case-study.html">
 <link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-<link rel="stylesheet" href="css/site.css?v=20261018-beta-buttons">
+<link rel="stylesheet" href="css/site.css?v=20261018-open-beta">
 <link rel="stylesheet" href="css/case-study.css?v=20261008-charts-g">
 <link rel="stylesheet" href="css/demo-videos.css?v=20261008">
 </head>
@@ -51,9 +51,9 @@
       <p class="eyebrow">Product &amp; Engineering Case Studies</p>
       <h1 class="display display--tight">An AI Product Built <em>Around Understanding.</em></h1>
       <p class="lede">How I’m building Angrove: a private study workspace that brings local AI, primary sources, and a map of your thinking onto an iPhone. Explore the current app, the architecture behind it, and the engineering decisions and experiments that shaped it.</p>
-      <p class="case-byline">Ryan Baltodano · Solo product designer &amp; engineer · Active development · October 2026</p>
+      <p class="case-byline">Ryan Baltodano · Solo product designer &amp; engineer · Open TestFlight beta · October 2026</p>
       <p class="case-byline">Open to product engineering opportunities.</p>
-      <div class="case-links"><a class="link-inline" href="assets/Ryan-Baltodano-Resume.pdf?v=20261009-59cb424f4c92" target="_blank" rel="noopener">View my résumé</a><a class="link-inline" href="about.html#source">Explore the engineering work</a><a class="link-inline" href="guide.html">Walk through the product</a></div>
+      <div class="case-links"><a class="link-inline" href="assets/Ryan-Baltodano-Resume.pdf?v=20261018-09e27782888f" target="_blank" rel="noopener">View my résumé</a><a class="link-inline" href="about.html#source">Explore the engineering work</a><a class="link-inline" href="guide.html">Walk through the product</a></div>
     </div>
   </section>
 
@@ -133,7 +133,7 @@
         <section class="case-section" id="architecture">
           <p class="eyebrow">03 · October 2026 · The architecture</p>
           <h2 class="display display--tight">A Whole System <em>on the Phone.</em></h2>
-          <p>The current development build uses stock instruction-tuned Gemma 4 E4B from the LiteRT Community package. It is not an Angrove fine-tune. Core ML MiniLM embeddings support local passage retrieval and relationships in the map.</p>
+          <p>Angrove uses stock instruction-tuned Gemma 4 E4B from the LiteRT Community package. It is not an Angrove fine-tune. Core ML MiniLM embeddings support local passage retrieval and relationships in the map.</p>
           <div class="case-facts"><div><strong>On-device</strong><span>Generation &amp; retrieval</span></div><div><strong>37 works</strong><span>Current Library export</span></div><div><strong>51,836 passages</strong><span>Locally searchable sources</span></div></div>
           <ol class="case-pipeline" aria-label="Logical answer pipeline">
             <li><strong>SwiftUI question</strong><span>Conversation and branch identity are captured.</span></li>
@@ -150,7 +150,7 @@
             </div>
             <figcaption>October 5, 2026 mobile browser captures, in time order: Midpoint vector selection at 12:06, then semantic distances and map layout at 12:07.</figcaption>
           </figure>
-          <p>A separate engineering showcase is in preparation: a dated, runnable slice of the Midpoint and Insight Tree embedding code, with sample data, tests, and technical notes. It will be refreshed deliberately rather than automatically synced with the full app. <a class="link-inline" href="about.html#review-request">Full-source review is available on request.</a></p>
+          <p>The case studies document Midpoint and Insight Tree embeddings, with architecture notes and evaluation results. <a class="link-inline" href="about.html#review-request">Full-source review is available on request.</a></p>
         </section>
 
         <section class="case-section" id="decisions">
@@ -163,7 +163,7 @@
             <figcaption>The Nature of Evil conversation with its source details expanded: the Corpus Grounded label, retrieved Summa Theologica links, and contextual concepts in the answer.</figcaption>
           </figure>
           <div class="case-decision"><h3>Keep unsupported claims out of the answer.</h3><p>Some source requests can return verified passages without another generation. Others use retrieved evidence or abstain when reliable evidence is absent. This makes sources inspectable, but it can also narrow coverage and produce unhelpful refusals. Retrieval quality needs its own evaluation.</p></div>
-          <div class="case-decision"><h3>Protect saved personal data.</h3><p><strong>Fully Encrypted saved personal data</strong> uses AES-256-GCM with Keychain-managed keys in the development implementation. A separate widget key limits access, and startup validates ciphertext before migrating plaintext. Source integration and physical-device lock and backup-restore checks remain release work. Deliberate conversation exports are readable JSON; displayed content and screenshots are outside this storage boundary. <a class="link-inline" href="guide.html#privacy">Read the coverage and recovery details.</a></p></div>
+          <div class="case-decision"><h3>Protect saved personal data.</h3><p><strong>Fully Encrypted saved personal data</strong> uses AES-256-GCM with Keychain-managed keys on your device. A separate widget key limits access, and startup validates ciphertext before migrating plaintext. Ongoing validation covers source integration, physical-device lock behavior, and backup recovery. Deliberate conversation exports are readable JSON; displayed content and screenshots are outside this storage boundary. <a class="link-inline" href="guide.html#privacy">Read the coverage and recovery details.</a></p></div>
         </section>
 
         <section class="case-section" id="performance">
@@ -199,7 +199,7 @@
           <aside class="case-note"><h3>What these numbers mean</h3><p>The scorer checks patterns and output constraints. It can miss substantive errors or penalize valid wording, so these scores are not a general accuracy percentage. Both sets had already been used for development. Times are conventional medians across all cases, including retrieval and any audit pass; they exclude model loading, queue wait, and UI reveal. They come from the simulator, so they compare the two settings rather than predict phone speed; the phone figures are in the section above.</p></aside>
           <p>The evaluation records retain the exact experiment build, model and fixture hashes, aggregate outcomes, and input-artifact hashes. Personal content and native logs are excluded from shared summaries. Original fixtures and scoring material remain in the private evaluation archive; the results above explain the decision but are not a complete independent replication kit.</p>
           <p><a class="link-inline" href="about.html#review-request">Request the evaluation methodology and evidence for review</a>.</p>
-          <p>Behavior tests separately cover model lifecycle, retrieval, source locators, conversation persistence, semantic membership, and encrypted-storage migration. A test suite’s presence is not a claim that the latest working tree has passed a full release gate.</p>
+          <p>Behavior tests separately cover model lifecycle, retrieval, source locators, conversation persistence, semantic membership, and encrypted-storage migration. Measured results on this page refer to the dated runs and configurations described alongside them.</p>
         </section>
 
         <section class="case-section" id="exploration">
@@ -215,8 +215,8 @@
         <section class="case-section" id="next">
           <p class="eyebrow">08 · What comes next</p>
           <h2 class="display display--tight">Validate the Product <em>in People’s Hands.</em></h2>
-          <p>Angrove is in active development. I have not published adoption, retention, or learning-outcome results. The next product questions are whether people revisit saved Insights, check the source passages, and find the map useful.</p>
-          <p>Before release, engineering work includes phone lifecycle validation (backgrounding, memory warnings, and idle unloads), shorter waits around the engine restart, encryption migration and backup recovery, model delivery, and a supported-device matrix. Historical phone scores whose raw run artifacts were lost are not used as headline evidence here.</p>
+          <p>The Angrove beta is open now on TestFlight. An App Store release is next. I have not published adoption, retention, or learning-outcome results. The next product questions are whether people revisit saved Insights, check the source passages, and find the map useful.</p>
+          <p>Ongoing engineering work focuses on phone lifecycle validation (backgrounding, memory warnings, and idle unloads), shorter waits around the engine restart, encryption migration and backup recovery, model delivery, and a supported-device matrix. Historical phone scores whose raw run artifacts were lost are not used as headline evidence here.</p>
           <div class="case-links"><a class="btn-pill" href="about.html#review-request">Discuss the implementation</a><a class="link-inline" href="about.html">Why I’m building Angrove</a></div>
         </section>
 
