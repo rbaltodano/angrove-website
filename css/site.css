@@ -1418,9 +1418,9 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   line-height: 1.5;
 }
 
-/* Dated macOS availability uses the same green capsule without link behavior. */
-.btn-upcoming { flex-direction: column; gap: 2px; padding: 14px 36px; cursor: default; }
-.btn-upcoming small { font-size: 10px; line-height: 1.2; font-weight: 700; }
+/* Dated macOS availability uses a secondary outline without link behavior. */
+.btn-upcoming { flex-direction: column; gap: 2px; padding: 14px 36px; background: transparent; color: var(--light-green); box-shadow: inset 0 0 0 1.5px rgba(134, 128, 62, 0.45); cursor: default; }
+.btn-upcoming small { font-size: 10px; line-height: 1.2; font-weight: 700; text-transform: uppercase; }
 @media (hover: hover) { .btn-upcoming:hover { scale: none; } }
 
 /* ---------- Footer ---------- */
