@@ -2668,4 +2668,5 @@ code.cmd, .faq-item__a code.cmd { padding: 4px 10px; border-radius: 8px; backgro
   color: var(--light-green);
   box-shadow: inset 0 0 0 1.5px rgba(134, 128, 62, 0.45);
 }
+.cta__copy .creator-note { margin-top: 0; font-size: 13px; color: var(--light-green); }
 .creator-note { margin-top: 18px; font-size: 13px; line-height: 1.6; color: var(--light-green); }
