@@ -23,11 +23,6 @@
 .note-card__author .logo__leaf, .note-byline__author .logo__leaf { width: 17px; height: 18px; flex: none; }
 .note-card__more { color: var(--light-green); font-weight: 700; }
 .note-card__more:hover { text-decoration: underline; text-underline-offset: 4px; }
-.note-card--featured { grid-column: 1 / -1; flex-direction: row; }
-.note-card--featured .note-card__image { flex: 1.15; aspect-ratio: auto; min-height: 340px; }
-.note-card--featured .note-card__body { flex: 1; justify-content: center; padding: 36px 40px; }
-.note-card--featured h2 { font-size: clamp(26px, 2.8vw, 34px); }
-.note-card--featured .note-card__foot { margin-top: 8px; }
 .note-layout { max-width: 850px; }
 .note-hero .page-hero__inner { max-width: 900px; }
 .note-hero .note-back { margin-bottom: 12px; font-size: 14px; }
@@ -45,11 +40,6 @@
 .note-hero .note-back { display: inline-block; margin-bottom: 20px; }
 .note-story > .case-section { font-size: 18px; line-height: 1.85; }
 .note-related { padding: 28px 32px; border-radius: 20px; background: var(--canvas-secondary); }
-@media (max-width: 860px) {
-  .note-card--featured { flex-direction: column; }
-  .note-card--featured .note-card__image { flex: none; aspect-ratio: 16 / 9; min-height: 0; }
-  .note-card--featured .note-card__body { padding: 24px 28px 26px; }
-}
 @media (max-width: 700px) {
   .notes-intro { flex-direction: column; gap: 6px; }
   .notes-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
