@@ -4,7 +4,7 @@
 .notes-intro__title { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--heading); }
 .notes-intro > p:last-child { font-size: 14px; color: var(--paragraph-dim); }
 .notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
-.note-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; border: 1px solid var(--border); background: var(--canvas-secondary); transition: transform .2s ease, box-shadow .2s ease; }
+.note-card { position: relative; cursor: pointer; display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; border: 1px solid var(--border); background: var(--canvas-secondary); transition: transform .2s ease, box-shadow .2s ease; }
 .note-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(74, 50, 28, 0.12); }
 .note-card__image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--border); }
 .note-card__image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
@@ -61,3 +61,8 @@
 .note-card__image img[src$="olive-sapling.jpg"], .note-cover img[src$="olive-sapling.jpg"] { object-position: 80% 50%; }
 .note-card__image img[src$="olive-bench.jpg"], .note-cover img[src$="olive-bench.jpg"] { object-position: 60% 50%; }
 .note-card__image img[src$="olive-bowl.jpg"], .note-cover img[src$="olive-bowl.jpg"] { object-position: 50% 50%; }
+.note-card h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.note-card:hover h2 a { color: var(--light-green); }
+.note-card__more { position: relative; z-index: 2; }
+.note-card a:focus-visible { outline-offset: 2px; }
+.note-card h2 a:focus-visible::after { outline: 2px solid var(--light-green); outline-offset: -2px; border-radius: 20px; }
