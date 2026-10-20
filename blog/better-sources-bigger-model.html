@@ -66,6 +66,9 @@
             <figcaption><strong>Hard-set score out of 40, by model and file size.</strong> All Mac runs through the same app pipeline. The Qwen3.5 9B files are the model Bonsai 9B is built from, compressed less. On the base iPhone 17, the 2.5-bit and 3-bit files were stopped by the system for memory before their first answer; the larger files were not tried.</figcaption>
           </figure>
           <p>Bonsai 9B scored lower than E4B, and its misses were confident wrong facts rather than weak reasoning: it called 451 the year of the First Council of Constantinople, and credited the Athanasian Creed to Athanasius. A prompt written for it made no difference. The same model compressed less gets those facts back, reaching 37 at 3 bits, which points to extreme compression as a contributor to the factual loss in these runs. On the base iPhone 17, though, the phone ran out of memory loading it.</p>
+          <figure class="case-chart" id="phone-answer-times" data-case-chart="scores" data-max="60" data-tick-step="20" data-unit="seconds" data-series='[{"key": "median", "label": "Median answer time", "color": "#5F7020"}, {"key": "p90", "label": "90th-percentile answer time", "color": "#C8973A"}]' data-rows='[{"label": "Gemma 4 E4B", "bars": [{"key": "median", "value": 22.9}, {"key": "p90", "value": 40.6}]}, {"label": "Bonsai 9B", "bars": [{"key": "median", "value": 30.3}, {"key": "p90", "value": 48.9}]}]'>
+            <figcaption><strong>Answer time on iPhone 17 (8 GB), in seconds.</strong> One run per model across the 40-question hard set. Bars compare the median and the 90th percentile, showing typical and slower answers. Device scores, thermal observations, and background-app closures are in the table below.</figcaption>
+          </figure>
           <p class="case-table-hint">Swipe the table to see all columns.</p>
           <div class="case-table-wrap" role="region" aria-label="Gemma 4 E4B and Bonsai 9B on the iPhone" tabindex="0">
             <table class="case-table"><caption>40 hard questions · iPhone 17 (8 GB) · one run each</caption><thead><tr><th scope="col">Model</th><th scope="col">Score</th><th scope="col">Answer time<br>median / slowest 10%</th><th scope="col">Phone reached “serious” heat</th><th scope="col">Background apps closed for memory</th></tr></thead><tbody><tr><th scope="row">Gemma 4 E4B</th><td>32/40</td><td>22.9 s / 40.6 s</td><td>after 12 min</td><td>0</td></tr><tr><th scope="row">Bonsai 9B</th><td>29/40</td><td>30.3 s / 48.9 s</td><td>after 7 min</td><td>1</td></tr></tbody></table>
@@ -113,6 +116,6 @@
 </footer>
 <script src="../js/site.js"></script>
 <script src="../js/murmuration.js?v=20261003-tap"></script>
-<script src="../js/case-charts.js?v=20261020-scores"></script>
+<script src="../js/case-charts.js?v=20261020-comparisons"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-// Case Studies phone charts: stacked bars with a hover/focus tooltip.
-// Data comes from the Oct 8, 2026 iPhone 17 run (medians; see the table beside each chart).
+// Development Notes charts: responsive bars with hover/focus details.
+// Dated measurements and units come from each figure; tables retain the underlying values.
 (function () {
   const NS = 'http://www.w3.org/2000/svg';
   const SERIES = [
@@ -154,14 +154,21 @@
     });
   }
 
-  // Scores out of 40, one or more bars per row. Series (colors and legend) and rows come from the
+  // Grouped comparisons, one or more bars per row. Default scale: scores out of 40.
+  // data-max, data-tick-step, and data-unit="seconds" also support latency comparisons.
+  // Series (colors and legend) and rows come from the
   // figure: data-series='[{"key","label","color"}]', data-rows='[{"label","note","bars":[{"key","value"}]}]'.
   function scores(host, W) {
     const figure = host.parentElement;
     const series = JSON.parse(figure.dataset.series);
     const rows = JSON.parse(figure.dataset.rows);
     const byKey = Object.fromEntries(series.map((s) => [s.key, s]));
-    const max = 40, top = 26, labelH = 22, rowGap = 22;
+    const max = Number(figure.dataset.max || 40);
+    const tickStep = Number(figure.dataset.tickStep || 10);
+    const seconds = figure.dataset.unit === 'seconds';
+    const valueLabel = (value) => seconds ? `${value.toFixed(1)} s` : `${value}`;
+    const detailLabel = (value) => seconds ? valueLabel(value) : `${value}/${max}`;
+    const top = 26, labelH = 22, rowGap = 22;
     const barCount = Math.max(...rows.map((r) => r.bars.length));
     const barH = barCount > 1 ? 18 : 26, barGap = 4;
     const rowH = labelH + barCount * barH + (barCount - 1) * barGap;
@@ -177,9 +184,9 @@
     const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'case-chart__svg', 'aria-hidden': 'false' }, host);
     const tip = tooltip(host);
     const sx = (v) => (v / max) * W;
-    for (let t = 0; t <= max; t += 10) {
+    for (let t = 0; t <= max; t += tickStep) {
       el('line', { x1: sx(t), x2: sx(t), y1: top - 6, y2: H - rowGap + 4, class: 'case-chart__grid' }, svg);
-      el('text', { x: sx(t), y: 12, class: 'case-chart__tick', 'text-anchor': t === 0 ? 'start' : t === max ? 'end' : 'middle' }, svg).textContent = `${t}`;
+      el('text', { x: sx(t), y: 12, class: 'case-chart__tick', 'text-anchor': t === 0 ? 'start' : t === max ? 'end' : 'middle' }, svg).textContent = seconds ? `${t} s` : `${t}`;
     }
     rows.forEach((row, i) => {
       const y0 = top + i * (rowH + rowGap);
@@ -196,9 +203,9 @@
         const y = y0 + labelH + j * (barH + barGap);
         const w = sx(b.value);
         lastMark = el('path', { d: endRounded(0, y, w, barH, 4, true), fill: byKey[b.key].color }, bar);
-        el('text', { x: w - 8, y: y + barH / 2 + 4, class: 'case-chart__inlabel', 'text-anchor': 'end' }, labels).textContent = `${b.value}`;
+        el('text', { x: w - 8, y: y + barH / 2 + 4, class: 'case-chart__inlabel', 'text-anchor': 'end' }, labels).textContent = valueLabel(b.value);
       });
-      const detail = row.bars.map((b) => `${byKey[b.key].label}: ${b.value}/40`).join('<br>');
+      const detail = row.bars.map((b) => `${byKey[b.key].label}: ${detailLabel(b.value)}`).join('<br>');
       hit(svg, tip, { x: 0, y: y0, width: W, height: rowH }, `<strong>${row.label}${row.note ? ` · ${row.note}` : ''}</strong><br>${detail}`, lastMark);
     });
   }

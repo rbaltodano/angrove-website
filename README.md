@@ -116,7 +116,12 @@ still land on the corresponding summary and article link, preserving existing re
   archived and shelved on September 25. This is historical reporting, not resumed research.
 
 Dates identify the work being reported. The migration preserves results, table values,
-chart data, methods, and limitations. `js/case-charts.js` and `css/case-study.css` are shared
+chart data, methods, and limitations. The thinking-mode post graphs objective passes and median answer times. The model/source post
+also graphs phone median and 90th-percentile latency. Chart axes start at zero; time comparisons
+use seconds and scoring comparisons use passes out of 40. The historical archive deliberately
+avoids a chart because its exploratory configurations were not matched.
+
+`js/case-charts.js` and `css/case-study.css` are shared
 by the posts with charts; the case study no longer loads the chart script. Every post links
 back to the index and product story, with related notes for continued reading.
 
