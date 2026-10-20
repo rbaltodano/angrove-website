@@ -9,7 +9,7 @@
 .note-card__image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--border); }
 .note-card__image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 .note-card:hover .note-card__image img { transform: scale(1.04); }
-.note-card__tag, .note-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--canvas); color: var(--light-green); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.4; }
+.note-card__tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--canvas); color: var(--light-green); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.4; }
 .note-card__tag { position: absolute; top: 16px; left: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
 .note-card__body { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 24px 28px 26px; }
 .note-card__meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 13px; line-height: 1.6; color: var(--paragraph-dim); }
@@ -38,9 +38,8 @@
 .note-related li a { border-bottom: 1px solid var(--border); }
 .note-related a:hover { color: var(--light-green); }
 .note-card a:focus-visible, .note-related a:focus-visible, .note-back:focus-visible { outline: 2px solid var(--light-green); outline-offset: 6px; }
-.note-cover { margin: 0 0 56px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 2 / 0.9; }
+.note-cover { position: relative; margin: 0 0 56px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 2 / 0.9; }
 .note-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.note-hero .note-tag { margin-bottom: 20px; background: var(--canvas-secondary); }
 .note-hero .case-byline { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 12px; margin-inline: auto; }
 .note-hero .note-back { display: inline-block; margin-bottom: 20px; }
 .note-story > .case-section { font-size: 18px; line-height: 1.85; }

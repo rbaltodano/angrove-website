@@ -25,7 +25,7 @@
 <link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
 <link rel="stylesheet" href="../css/site.css?v=20261020-notes">
 <link rel="stylesheet" href="../css/case-study.css?v=20261020-scores">
-<link rel="stylesheet" href="../css/blog.css?v=20261020-cards7">
+<link rel="stylesheet" href="../css/blog.css?v=20261020-cards8">
 
 <meta property="article:author" content="Ryan Baltodano">
 <meta property="article:published_time" content="2026-10-20">
@@ -53,13 +53,12 @@
 <main id="main">
   <section class="page-hero note-hero"><div class="page-hero__inner">
     <a class="link-inline note-back" href="../blog/">← Development Notes</a>
-    <p class="eyebrow">Models &amp; retrieval</p>
     <h1 class="display display--tight">Better Sources Beat <em>a Bigger Model.</em></h1>
     <p class="lede">A larger model in a smaller file looked promising. Comparing factual errors, phone memory, and source retrieval changed where I put the engineering effort.</p>
     <p class="case-byline"><span class="note-byline__author"><span class="logo__leaf" aria-hidden="true"></span>Ryan Baltodano</span><span aria-hidden="true">·</span><time datetime="2026-10-20">October 20, 2026</time><span aria-hidden="true">·</span>4 min read</p>
   </div></section>
   <section class="section section--flush-top section--after-hero"><div class="container note-layout">
-    <figure class="note-cover"><img src="../assets/scenery/open-door.jpg" alt="" width="1600" height="720"></figure>
+    <figure class="note-cover"><img src="../assets/scenery/open-door.jpg" alt="" width="1600" height="720"><span class="note-card__tag">Models &amp; retrieval</span></figure>
     <article class="case-story note-story" aria-label="Better Sources Beat a Bigger Model">
       <div class="case-section">
           <p>PrismML’s Ternary Bonsai 2 squeezes a 9-billion-parameter model into 2.4 GB by storing each weight as one of three values. That is smaller than the 4-billion-parameter-class Gemma 4 E4B that Angrove ships. If the bigger model held up, the phone could get a smarter model with a smaller model file. File size alone would not establish its runtime memory use. I added a llama.cpp runtime beside LiteRT-LM so either model can run through the same app pipeline, then wrote 40 harder questions to compare them: precise distinctions, false premises, exact history, and ten multi-turn exchanges.</p>
