@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://angrove.app/privacy.html">
 <link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-<link rel="stylesheet" href="css/site.css?v=20261019-footer-macos">
+<link rel="stylesheet" href="css/site.css?v=20261020-notes">
 </head>
 <body>
 
@@ -28,6 +28,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html">Case Studies</a>
+      <a href="blog/">Dev Notes</a>
       <a href="faq.html">FAQ</a>
     </nav>
     <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
@@ -49,13 +50,14 @@
       <p><strong>The short version.</strong> Angrove answers your questions on your iPhone. Your conversations, saved Insights, Study Topics and reading history stay on your device, encrypted. Angrove has no accounts, advertising, analytics or tracking. Your information is not sold or shared. Data leaves your phone in only two situations: when Apple delivers the app’s model files, and when you choose to send a bug report.</p>
 
       <h2>What stays on your device</h2>
-      <p>Angrove’s language model and source library run on your iPhone. Your questions and the model’s answers are never sent to a model server or anyone else.</p>
+      <p>Angrove’s language model and source library run on your iPhone. Your questions and the model’s answers are never sent to a model server or anyone else in the current public beta. An optional Wikipedia search is in development, as described below.</p>
       <p>Everything personal you create in Angrove is stored only on your device and encrypted with AES-256-GCM before it is saved. This includes conversations and drafts, saved Insights and definitions, your Insight Tree, Study Topics, reading and discovery history, Home usage records, your name and custom instructions, and the app’s local backups. Apple’s Keychain protects the encryption keys; they are not synced to iCloud Keychain and are never sent off your device.</p>
       <p>This content cannot be seen, recovered or restored. If the encryption key on your device is lost, the encrypted data cannot be read by anyone.</p>
 
       <h2>When data leaves your device</h2>
       <p><strong>Model download from Apple.</strong> When you install Angrove, iOS downloads the app’s on-device model from Apple’s servers. Apple handles that download under the <a class="link-inline" href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a>. The download does not include any of your conversations or saved content.</p>
       <p><strong>Bug reports you choose to send.</strong> If you use Report a Bug in the app (Settings → Report a Bug) or on this website, the submitted information includes what you type: a description, optional steps to reproduce, and an optional email address if you want a reply. Reports sent from the app also include the Angrove version and build number and your iOS version. Reports are delivered through <a class="link-inline" href="https://formspree.io/legal/privacy-policy">Formspree</a>, a form-processing service that forwards them to the support inbox; like any web service, it also receives your IP address when a report is sent. Nothing else from the app is attached, so please leave out private conversations or other sensitive details. Reports are used only to fix problems and reply to you, and are deleted when no longer needed. A report deletion request can be sent at any time.</p>
+      <p><strong>Upcoming optional Wikipedia search.</strong> This feature is in development and is not available in the public beta yet. The planned behavior is to leave it off by default. If enabled, it would generate search keywords on your iPhone when the Library cannot support a question and send those keywords to Wikipedia’s public service to retrieve articles. It would not send the full question, conversation, or saved content. Like any web service, Wikipedia would receive the search keywords and your IP address under the <a class="link-inline" href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy">Wikimedia Foundation privacy policy</a>. This description covers the planned feature; the current public beta does not make these searches. <a class="link-inline" href="blog/better-sources-bigger-model.html">Read the development note</a>.</p>
       <p><strong>Things you share yourself.</strong> Export Conversations creates a readable, unencrypted file, and text you copy or share leaves Angrove through iOS. Where it goes from there is up to you.</p>
 
       <h2>iPhone features Angrove uses</h2>
@@ -120,6 +122,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html">Case Studies</a>
+      <a href="blog/">Development Notes</a>
       <a href="faq.html">FAQ</a>
       <a href="report.html">Report a Bug</a>
       <a href="privacy.html">Privacy</a>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better Sources Beat a Bigger Model — Angrove</title>
+<meta name="description" content="Testing compressed models led back to a more useful question: what happens when the model has the right source?">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Angrove">
+<meta property="og:title" content="Better Sources Beat a Bigger Model — Angrove">
+<meta property="og:description" content="Testing compressed models led back to a more useful question: what happens when the model has the right source?">
+<meta property="og:url" content="https://angrove.app/blog/better-sources-bigger-model.html">
+<meta property="og:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Better Sources Beat a Bigger Model — Angrove">
+<meta name="twitter:description" content="Testing compressed models led back to a more useful question: what happens when the model has the right source?">
+<meta name="twitter:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta name="twitter:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<link rel="canonical" href="https://angrove.app/blog/better-sources-bigger-model.html">
+<link rel="icon" type="image/png" href="../assets/brand/favicon.png">
+<link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
+<link rel="stylesheet" href="../css/site.css?v=20261020-notes">
+<link rel="stylesheet" href="../css/case-study.css?v=20261020-scores">
+<link rel="stylesheet" href="../css/blog.css?v=20261020-notes">
+
+<meta property="article:author" content="Ryan Baltodano">
+<meta property="article:published_time" content="2026-10-20">
+
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner">
+    <a href="/" class="logo">
+      <span class="logo__leaf" aria-hidden="true"></span>
+      <span>Angrove</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/" aria-current="page">Dev Notes</a>
+      <a href="../faq.html">FAQ</a>
+    </nav>
+    <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Open menu"><span class="nav__burger" aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+<main id="main">
+  <section class="page-hero note-hero"><div class="page-hero__inner">
+    <a class="link-inline note-back" href="../blog/">← Development Notes</a>
+    <p class="eyebrow">Models &amp; retrieval</p>
+    <h1 class="display display--tight">Better Sources Beat <em>a Bigger Model.</em></h1>
+    <p class="lede">A larger model in a smaller file looked promising. Comparing factual errors, phone memory, and source retrieval changed where I put the engineering effort.</p>
+    <p class="case-byline">Ryan Baltodano · <time datetime="2026-10-20">October 20, 2026</time> · Experiments</p>
+  </div></section>
+  <section class="section section--flush-top section--after-hero"><div class="container note-layout">
+    <article class="case-story note-story" aria-label="Better Sources Beat a Bigger Model">
+      <div class="case-section">
+          <p>PrismML’s Ternary Bonsai 2 squeezes a 9-billion-parameter model into 2.4 GB by storing each weight as one of three values. That is smaller than the 4-billion-parameter-class Gemma 4 E4B that Angrove ships. If the bigger model held up, the phone could get a smarter model with a smaller model file. File size alone would not establish its runtime memory use. I added a llama.cpp runtime beside LiteRT-LM so either model can run through the same app pipeline, then wrote 40 harder questions to compare them: precise distinctions, false premises, exact history, and ten multi-turn exchanges.</p>
+          <figure class="case-chart" data-case-chart="scores" data-series='[{"key": "fits", "label": "Runs on the base iPhone 17", "color": "#5F7020"}, {"key": "large", "label": "Too large for its memory", "color": "#C8973A"}]' data-rows='[{"label": "Bonsai 9B, ternary", "note": "2.4 GB", "bars": [{"key": "fits", "value": 29}]}, {"label": "Gemma 4 E4B, shipping", "note": "3.7 GB", "bars": [{"key": "fits", "value": 31}]}, {"label": "Qwen3.5 9B, about 2.5-bit", "note": "4.1 GB", "bars": [{"key": "large", "value": 33}]}, {"label": "Qwen3.5 9B, 3-bit", "note": "4.7 GB", "bars": [{"key": "large", "value": 37}]}, {"label": "Qwen3.5 9B, 4-bit", "note": "5.7 GB", "bars": [{"key": "large", "value": 37}]}, {"label": "Qwen3.5 9B, 6-bit", "note": "7.5 GB", "bars": [{"key": "large", "value": 37}]}]'>
+            <figcaption><strong>Hard-set score out of 40, by model and file size.</strong> All Mac runs through the same app pipeline. The Qwen3.5 9B files are the model Bonsai 9B is built from, compressed less. On the base iPhone 17, the 2.5-bit and 3-bit files were stopped by the system for memory before their first answer; the larger files were not tried.</figcaption>
+          </figure>
+          <p>Bonsai 9B scored lower than E4B, and its misses were confident wrong facts rather than weak reasoning: it called 451 the year of the First Council of Constantinople, and credited the Athanasian Creed to Athanasius. A prompt written for it made no difference. The same model compressed less gets those facts back, reaching 37 at 3 bits, which points to extreme compression as a contributor to the factual loss in these runs. On the base iPhone 17, though, the phone ran out of memory loading it.</p>
+          <p class="case-table-hint">Swipe the table to see all columns.</p>
+          <div class="case-table-wrap" role="region" aria-label="Gemma 4 E4B and Bonsai 9B on the iPhone" tabindex="0">
+            <table class="case-table"><caption>40 hard questions · iPhone 17 (8 GB) · one run each</caption><thead><tr><th scope="col">Model</th><th scope="col">Score</th><th scope="col">Answer time<br>median / slowest 10%</th><th scope="col">Phone reached “serious” heat</th><th scope="col">Background apps closed for memory</th></tr></thead><tbody><tr><th scope="row">Gemma 4 E4B</th><td>32/40</td><td>22.9 s / 40.6 s</td><td>after 12 min</td><td>0</td></tr><tr><th scope="row">Bonsai 9B</th><td>29/40</td><td>30.3 s / 48.9 s</td><td>after 7 min</td><td>1</td></tr></tbody></table>
+          </div>
+          <h2 class="case-subhead">Giving the model the right source</h2>
+          <p>Most wrong answers were facts the model had to remember. So I tested the other way to supply facts: hand the model the passage that answers the question. With a correct passage, every model scored 39 or 40, so the gap between them nearly disappeared. Real retrieval is harder. Searching Wikipedia with the raw question often returned the wrong pages, so the model now writes short keyword queries, and a 22-million-parameter reranker reads the question beside each paragraph and keeps the ones that answer it.</p>
+          <figure class="case-chart" data-case-chart="scores" data-series='[{"key": "normal", "label": "Angrove’s Library", "color": "#C0B494"}, {"key": "web", "label": "+ Wikipedia and a reranker", "color": "#5F7020"}, {"key": "oracle", "label": "Correct passage supplied", "color": "#C8973A"}]' data-rows='[{"label": "Gemma 4 E4B", "note": "3.7 GB", "bars": [{"key": "normal", "value": 31}, {"key": "web", "value": 37}, {"key": "oracle", "value": 40}]}, {"label": "Qwen3.5 4B, 4-bit", "note": "2.7 GB", "bars": [{"key": "normal", "value": 34}, {"key": "web", "value": 37}, {"key": "oracle", "value": 40}]}, {"label": "Bonsai 4B, ternary", "note": "1.15 GB", "bars": [{"key": "normal", "value": 30}, {"key": "web", "value": 35}, {"key": "oracle", "value": 39}]}]'>
+            <figcaption><strong>Hard-set score out of 40, by where the facts come from.</strong> Wikipedia results were fetched once and given to every model alike. The correct-passage bars are an upper bound: the passages were written by hand and contain the checked facts.</figcaption>
+          </figure>
+          <p><strong>What it changed:</strong> Gemma 4 E4B stays the model. I am building an optional Wikipedia search, off by default, that runs only when Angrove’s own Library has nothing on a question. The model writes a few search keywords, which are the only thing that leaves the phone; a 43 MB on-device reranker chooses the paragraphs; and the answer lists the Wikipedia articles used and the sources they cite. The comparison above used a shared set of fetched Wikipedia results. In the first end-to-end working version on the Mac, it raised E4B from 31 to 34 at about 11 seconds per answer. Reranking Angrove’s own Library helped less, because the Library lacks many historical facts, which points to adding a public-domain reference work next.</p>
+          <aside class="case-note"><h2>Limits of these numbers</h2><p>One greedy run per configuration; most runs on a Mac, with the iPhone table as marked. The scorer checks patterns, so reading the answers moved a few results in both directions. The hard questions were also used to build the search pipeline, so its gains still need confirming on fresh questions. The Wikipedia search is not yet in a released build.</p></aside>
+</div>
+      <aside class="note-related" aria-label="Keep reading">
+        <p class="eyebrow">Keep reading</p><ul><li><a href="where-the-wait-goes.html">Where the Wait Actually Goes</a></li><li><a href="choosing-a-thinking-default.html">Measure Before Choosing a Default</a></li><li><a href="a-working-model-is-the-first-gate.html">A Working Model Is Only the First Gate</a></li></ul>
+        <p><a class="link-inline" href="../case-study.html">See how this fits into Angrove’s larger story</a></p>
+      </aside>
+    </article>
+  </div></section>
+</main>
+<footer class="footer">
+  <div class="footer__row">
+    <div class="footer__brand">
+      <a href="/" class="logo logo--footer">
+        <span class="logo__art">
+          <span class="logo__leaf" aria-hidden="true"></span>
+          <img src="../assets/brand/angrove-logo-light.png" alt="Angrove" width="185" height="56">
+        </span>
+      </a>
+      <p class="footer__tagline">A private place for serious questions. <a href="../guide.html#privacy">Encrypted on your device.</a></p>
+    </div>
+    <nav class="nav__links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/">Development Notes</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../report.html">Report a Bug</a>
+      <a href="../privacy.html">Privacy</a>
+    </nav>
+  </div>
+  <p class="footer__disclaimer">Angrove is a tool for private study and reflection. It is not a substitute for professional counseling, spiritual direction, or clergy.</p>
+  <p class="footer__legal">© 2026 Sine Viridian. All rights reserved.</p>
+  <p class="footer__wordmark" aria-hidden="true">Angrove</p>
+</footer>
+<script src="../js/site.js"></script>
+<script src="../js/murmuration.js?v=20261003-tap"></script>
+<script src="../js/case-charts.js?v=20261020-scores"></script>
+</body>
+</html>

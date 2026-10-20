@@ -1,0 +1,30 @@
+/* Development Notes share the case study's type, charts, and evidence treatments. */
+.notes-index { max-width: 1100px; }
+.notes-intro { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.notes-intro > p:last-child { max-width: 560px; font-size: 16px; line-height: 1.8; }
+.notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; }
+.note-card { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: 48px 0; border-bottom: 1px solid var(--border); }
+.note-card__meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; line-height: 1.7; color: var(--paragraph); }
+.note-card__meta > span:first-child { color: var(--light-green); font-weight: 700; }
+.note-card h2 { font-family: var(--serif); font-size: clamp(28px, 3vw, 36px); font-weight: 400; line-height: 1.35; color: var(--heading); }
+.note-card h2 a:hover { color: var(--light-green); }
+.note-card > p { font-size: 16px; line-height: 1.8; }
+.note-card .note-card__takeaway { padding-left: 20px; border-left: 2px solid var(--accent-gold); font-size: 15px; }
+.note-card > .link-inline { margin-top: auto; }
+.note-layout { max-width: 850px; }
+.note-hero .page-hero__inner { max-width: 900px; }
+.note-hero .note-back { margin-bottom: 12px; font-size: 14px; }
+.note-story { max-width: none; }
+.note-story > .case-section { padding-bottom: 48px; margin-bottom: 40px; }
+.note-related { font-size: 16px; line-height: 1.8; }
+.note-related ul { display: grid; gap: 12px; list-style: none; padding: 0; margin: 20px 0 28px; }
+.note-related li a { border-bottom: 1px solid var(--border); }
+.note-related a:hover { color: var(--light-green); }
+.note-card a:focus-visible, .note-related a:focus-visible, .note-back:focus-visible { outline: 2px solid var(--light-green); outline-offset: 6px; }
+@media (max-width: 700px) {
+  .notes-intro { flex-direction: column; gap: 16px; }
+  .notes-grid { grid-template-columns: minmax(0, 1fr); }
+  .note-card { padding: 36px 0; }
+}
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.note-story h2 { font-family: var(--serif); font-weight: 400; font-size: 25px; line-height: 1.5; color: var(--heading); }

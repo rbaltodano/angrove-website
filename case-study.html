@@ -23,8 +23,8 @@
 <link rel="canonical" href="https://angrove.app/case-study.html">
 <link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-<link rel="stylesheet" href="css/site.css?v=20261019-footer-macos">
-<link rel="stylesheet" href="css/case-study.css?v=20261008-charts-g">
+<link rel="stylesheet" href="css/site.css?v=20261020-notes">
+<link rel="stylesheet" href="css/case-study.css?v=20261020-scores">
 <link rel="stylesheet" href="css/demo-videos.css?v=20261008">
 </head>
 <body>
@@ -39,6 +39,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html" aria-current="page">Case Studies</a>
+      <a href="blog/">Dev Notes</a>
       <a href="faq.html">FAQ</a>
     </nav>
     <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
@@ -50,10 +51,10 @@
     <div class="page-hero__inner">
       <p class="eyebrow">Product &amp; Engineering Case Studies</p>
       <h1 class="display display--tight">An AI Product Built <em>Around Understanding.</em></h1>
-      <p class="lede">How I’m building Angrove: a private study workspace that brings local AI, primary sources, and a map of your thinking onto an iPhone. Explore the current app, the architecture behind it, and the engineering decisions and experiments that shaped it.</p>
+      <p class="lede">How I’m building Angrove: a private study workspace that brings local AI, primary sources, and a map of your thinking onto an iPhone. Explore the current app, the architecture behind it, and the decisions that connect them. Detailed experiments and measurements live in the Development Notes.</p>
       <p class="case-byline">Ryan Baltodano · Solo product designer &amp; engineer · Open TestFlight beta · October 2026</p>
       <p class="case-byline">Open to product engineering opportunities.</p>
-      <div class="case-links"><a class="link-inline" href="assets/Ryan-Baltodano-Resume.pdf?v=20261018-09e27782888f" target="_blank" rel="noopener">View my résumé</a><a class="link-inline" href="about.html#source">Explore the engineering work</a><a class="link-inline" href="guide.html">Walk through the product</a></div>
+      <div class="case-links"><a class="link-inline" href="assets/Ryan-Baltodano-Resume.pdf?v=20261018-09e27782888f" target="_blank" rel="noopener">View my résumé</a><a class="link-inline" href="about.html#source">Explore the engineering work</a><a class="link-inline" href="guide.html">Walk through the product</a><a class="link-inline" href="blog/">Read Development Notes</a></div>
     </div>
   </section>
 
@@ -63,12 +64,10 @@
         <p class="eyebrow">Inside the build</p>
         <p class="case-order">From product to process</p>
         <a href="#problem">The problem &amp; my role</a>
-        <a href="#product">Oct 5, 2026 · The product</a>
-        <a href="#architecture">Oct 2026 · Architecture</a>
-        <a href="#decisions">Oct 2026 · Engineering decisions</a>
-        <a href="#performance">Oct 8, 2026 · Speed on the phone</a>
-        <a href="#evaluation">Oct 2, 2026 · Thinking on or off</a>
-        <a href="#exploration">Aug–Sep 2026 · Models &amp; runtimes</a>
+        <a href="#product">The product</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#decisions">Engineering decisions</a>
+        <a href="#evidence">What testing changed</a>
         <a href="#next">What comes next</a>
       </nav>
       <article class="case-story">
@@ -81,7 +80,7 @@
         </section>
 
         <section class="case-section" id="product">
-          <p class="eyebrow">02 · October 5, 2026 · The product</p>
+          <p class="eyebrow">02 · The product</p>
           <h2 class="display display--tight">From a Question <em>to an Insight.</em></h2>
           <p>The central flow starts with a question. A source-oriented answer leads to a contextual definition; the user chooses whether to save that definition as an Insight. Saved Insights become a semantic map that can be revisited in the Insight Tree and Study view.</p>
           <ol class="case-flow" aria-label="The product workflow">
@@ -131,7 +130,7 @@
         </section>
 
         <section class="case-section" id="architecture">
-          <p class="eyebrow">03 · October 2026 · The architecture</p>
+          <p class="eyebrow">03 · The architecture</p>
           <h2 class="display display--tight">A Whole System <em>on the Phone.</em></h2>
           <p>Angrove uses stock instruction-tuned Gemma 4 E4B from the LiteRT Community package. It is not an Angrove fine-tune. Core ML MiniLM embeddings support local passage retrieval and relationships in the map.</p>
           <div class="case-facts"><div><strong>On-device</strong><span>Generation &amp; retrieval</span></div><div><strong>37 works</strong><span>Current Library export</span></div><div><strong>51,836 passages</strong><span>Locally searchable sources</span></div></div>
@@ -150,13 +149,13 @@
             </div>
             <figcaption>October 5, 2026 mobile browser captures, in time order: Midpoint vector selection at 12:06, then semantic distances and map layout at 12:07.</figcaption>
           </figure>
-          <p>The case studies document Midpoint and Insight Tree embeddings, with architecture notes and evaluation results. <a class="link-inline" href="about.html#review-request">Full-source review is available on request.</a></p>
+          <p>The map uses embeddings to organize related ideas; the User Guide explains its distances and Midpoint interactions. Dated evaluation results live in the <a class="link-inline" href="blog/">Development Notes</a>. <a class="link-inline" href="about.html#review-request">Full-source review is available on request.</a></p>
         </section>
 
         <section class="case-section" id="decisions">
-          <p class="eyebrow">04 · October 2026 · Engineering decisions</p>
+          <p class="eyebrow">04 · Engineering decisions</p>
           <h2 class="display display--tight">The Tradeoffs Shape <em>the Experience.</em></h2>
-          <div class="case-decision"><h3>Retrieve evidence locally.</h3><p>A memory-mapped matrix of 384-dimensional passage vectors supports a vectorized cosine scan. Semantic similarity alone can mistake Nicaea the city for the council, so source routing and text locators complement ranking. Regression tests check that the relevant source text reaches the prompt.</p></div>
+          <div class="case-decision"><h3>Retrieve evidence locally.</h3><p>The bundled Library makes source passages available offline. Similar wording alone can retrieve the wrong evidence, so source routing and passage locators help the app find the text a question actually needs. The reader can inspect that text alongside the answer.</p></div>
           <div class="case-decision"><h3>Make model work visible.</h3><p>Answers, definitions, and tree tasks compete for the same engine. The queue gives users cancellation and reordering, while persisted conversation and branch identifiers keep late results attached to the original question after navigation. When local generation fails, the app exposes a failure rather than inventing a substitute answer.</p></div>
           <figure class="case-screens case-screens--single">
             <a href="assets/app/case-study-2026-10-05/conversation-nature-of-evil.jpg"><img src="assets/app/case-study-2026-10-05/conversation-nature-of-evil.jpg" alt="Nature of Evil conversation with expanded Corpus Grounded details, Summa Theologica source links, and an answer about evil as a lack of good" width="588" height="1280" loading="lazy"></a>
@@ -166,54 +165,19 @@
           <div class="case-decision"><h3>Protect saved personal data.</h3><p><strong>Fully Encrypted saved personal data</strong> uses AES-256-GCM with Keychain-managed keys on your device. A separate widget key limits access, and startup validates ciphertext before migrating plaintext. Ongoing validation covers source integration, physical-device lock behavior, and backup recovery. Deliberate conversation exports are readable JSON; displayed content and screenshots are outside this storage boundary. <a class="link-inline" href="guide.html#privacy">Read the coverage and recovery details.</a></p></div>
         </section>
 
-        <section class="case-section" id="performance">
-          <p class="eyebrow">05 · October 8, 2026 · Speed on the phone</p>
-          <h2 class="display display--tight">Where the Wait <em>Actually Goes.</em></h2>
-          <p>I timed the shipping configuration on a base iPhone 17 with 8 GB of memory: stock Gemma 4 E4B on the GPU, 4,096-token context, thinking off, and the app’s own retrieval, queue, and runtime. Two fixed questions ran ten times each from a fresh launch: a one-sentence definition of prudence and a 180-word answer on justice and mercy.</p>
-          <figure class="case-chart" data-case-chart="breakdown" data-rows='[{"label":"One sentence (31 words)","load":7.1,"write":7.1},{"label":"About 180 words","load":6.8,"write":17.6}]'>
-            <figcaption><strong>Median time per part, from a fresh launch.</strong> Loading happens once; while you keep asking, the model stays ready and only the olive part repeats.</figcaption>
-          </figure>
-          <p class="case-table-hint">Swipe the table to see all times.</p>
-          <div class="case-table-wrap" role="region" aria-label="iPhone 17 answer times" tabindex="0">
-            <table class="case-table"><caption>Answer times · iPhone 17 (8 GB) · GPU · 10 trials per question</caption><thead><tr><th scope="col">Question</th><th scope="col">From launch<br>median / slowest</th><th scope="col">Model ready<br>median</th><th scope="col">Peak memory</th></tr></thead><tbody><tr><th scope="row">One sentence (31 words)</th><td>14.1 s / 20.7 s</td><td>7.1 s</td><td>1.38 GB</td></tr><tr><th scope="row">About 180 words</th><td>24.6 s / 27.1 s</td><td>17.6 s</td><td>1.38 GB</td></tr></tbody></table>
-          </div>
-          <p>Loading the model typically took 6–9 seconds; the one slower load, 12.9 seconds, was the first launch after installation. Long answers were written at about 10 words per second. Peak memory stayed under 1.4 GB, well inside the phone’s limit, and every answer completed without a crash or memory termination.</p>
-          <h3 class="case-subhead">Twenty answers in a row</h3>
-          <p>A sustained run asked the long question 20 times back to back, after one warm-up, to see what a long session costs.</p>
-          <figure class="case-chart" data-case-chart="sequence" data-turns="[[15.7,0],[15.6,0],[16.0,0],[19.9,6.9],[20.6,0],[20.6,0],[20.5,0],[21.5,6.4],[20.5,0],[20.6,0],[20.4,0],[21.5,7.0],[20.5,0],[20.6,0],[20.6,0],[21.2,7.0],[20.6,0],[20.1,0],[20.5,0],[21.2,7.1]]">
-            <figcaption><strong>Each answer’s time, in order.</strong> Every fourth answer includes an engine restart and reload. Answers also slowed from about 16 to 20.5 seconds as the phone warmed from nominal to fair; it never reached serious.</figcaption>
-          </figure>
-          <p><strong>What it changed:</strong> the app deliberately restarts the model engine after every four answers, a guard against a runtime hang. The run showed its price: about 7 seconds on every fourth answer. That trade-off is now the clearest target for shortening the wait, along with showing answers word by word.</p>
-          <aside class="case-note"><h3>Limits of these numbers</h3><p>One phone, plugged in, on a development build; the model runtime itself is precompiled. Answers currently appear all at once, so time to the first word equals the full time. Six trial starts were deferred because the phone was warm and retried after a two-minute cooldown. The raw run records are available on request.</p></aside>
-        </section>
-
-        <section class="case-section" id="evaluation">
-          <p class="eyebrow">06 · October 2, 2026 · Thinking on or off</p>
-          <h2 class="display display--tight">Measure Before <em>Choosing a Default.</em></h2>
-          <p>I compared native thinking on and off through the app pipeline in four completed simulator CPU runs on October 2, 2026. The same build and stock model answered two previously used 40-case development sets.</p>
-          <p class="case-table-hint">Swipe the table to see answer times.</p>
-          <div class="case-table-wrap" role="region" aria-label="Native thinking comparison" tabindex="0">
-            <table class="case-table"><caption>Native thinking comparison · Simulator CPU · 40 cases per set</caption><thead><tr><th scope="col">Development set</th><th scope="col">Thinking off</th><th scope="col">Thinking on</th><th scope="col">Median answer time<br>off / on</th></tr></thead><tbody><tr><th scope="row">Held-out</th><td>37/40</td><td>36/40</td><td>23.0 s / 43.7 s</td></tr><tr><th scope="row">Sealed-1</th><td>37/40</td><td>38/40</td><td>23.5 s / 47.6 s</td></tr><tr><th scope="row">Total objective passes</th><td>74/80</td><td>74/80</td><td>—</td></tr></tbody></table>
-          </div>
-          <p><strong>The decision:</strong> keep native thinking off by default. It showed no aggregate increase in objective passes here and roughly doubled answer time. That observation supports this configuration; it does not establish that thinking never helps.</p>
-          <aside class="case-note"><h3>What these numbers mean</h3><p>The scorer checks patterns and output constraints. It can miss substantive errors or penalize valid wording, so these scores are not a general accuracy percentage. Both sets had already been used for development. Times are conventional medians across all cases, including retrieval and any audit pass; they exclude model loading, queue wait, and UI reveal. They come from the simulator, so they compare the two settings rather than predict phone speed; the phone figures are in the section above.</p></aside>
-          <p>The evaluation records retain the exact experiment build, model and fixture hashes, aggregate outcomes, and input-artifact hashes. Personal content and native logs are excluded from shared summaries. Original fixtures and scoring material remain in the private evaluation archive; the results above explain the decision but are not a complete independent replication kit.</p>
-          <p><a class="link-inline" href="about.html#review-request">Request the evaluation methodology and evidence for review</a>.</p>
-          <p>Behavior tests separately cover model lifecycle, retrieval, source locators, conversation persistence, semantic membership, and encrypted-storage migration. Measured results on this page refer to the dated runs and configurations described alongside them.</p>
-        </section>
-
-        <section class="case-section" id="exploration">
-          <p class="eyebrow">07 · August–September 2026 · Models &amp; runtimes explored</p>
-          <h2 class="display display--tight">A Working Model Is Only <em>the First Gate.</em></h2>
-          <p>Before the current E4B/LiteRT integration, I explored larger Gemma packages and a smaller Qwen model through isolated llama.cpp Metal probes on a base iPhone 17. Those experiments tested whether alternative packages could sustain a useful session, and whether a model swap would fix source errors.</p>
-          <div class="case-decision"><h3>Gemma 4 12B: generation passed, retention failed.</h3><p>A 4.37 GB IQ2_M GGUF generated short text at 512-token context after reducing prefill to 32-token chunks. A retained-session trial produced 48 tokens, then terminated with signal 9 during a requested 40-second hold, correlated with system memory pressure. The available system report did not identify the probe as a specific jetsam victim. Successful short generation had not established enough headroom for a durable app session.</p></div>
-          <div class="case-decision"><h3>Qwen3-4B: smaller and feasible, but citations still needed work.</h3><p>The roughly 2.33 GiB Q4_K_M package passed bounded multi-turn probes at 2K and 4K context and a 40-second resident hold. A research-only adapter then exercised it in the actual conversation UI. Fine-tuning uncovered corrupted PDF article boundaries; cleaning the data and reformatting question/answer pairs improved output form, but a citation test still fabricated source text. That reinforced the need to evaluate retrieval and passage use separately from voice and fluency.</p></div>
-          <aside class="case-note"><h3>Historical exploration, not a model leaderboard.</h3><p>The tested smaller model was Qwen3-4B. Qwen3.5 appeared in a later candidate proposal; it does not inherit these results. Context sizes, token caps, packages, and tasks differed, so these are exploratory observations rather than a matched blind benchmark. The 12B and Qwen research was shelved on September 25, 2026. No experiments were rerun for this case study.</p></aside>
-          <p>Current development remains on Gemma 4 E4B and LiteRT-LM. The lesson is to count working buffers, KV cache, session retention, and factual behavior—not just model size or an attractive answer. <a class="link-inline" href="about.html#review-request">Request the historical configurations and supporting records.</a></p>
+        <section class="case-section" id="evidence">
+          <p class="eyebrow">05 · Learning from the build</p>
+          <h2 class="display display--tight">Let the Evidence <em>Shape the Product.</em></h2>
+          <p>The model is one part of the experience. I evaluate its answers alongside the sources it receives, the time someone waits, and the memory a real phone can spare. That work has shaped three decisions:</p>
+          <div class="case-decision" id="sources"><h3>Improve the evidence behind the answer.</h3><p>Recent model comparisons kept Gemma 4 E4B as the default and shifted the next work toward better retrieval. Optional Wikipedia search is in development, off by default, for questions the bundled Library cannot support. <a class="link-inline" href="blog/better-sources-bigger-model.html">Read the model and source experiments</a>.</p></div>
+          <div class="case-decision" id="performance"><h3>Measure the wait through the whole app.</h3><p>Phone testing separated model loading from answer generation and exposed the recurring cost of an engine restart. Shorter waits and showing answers as they are written remain engineering priorities. <a class="link-inline" href="blog/where-the-wait-goes.html">Read the iPhone performance note</a>.</p></div>
+          <div class="case-decision" id="evaluation"><h3>Make defaults earn their cost.</h3><p>Native thinking roughly doubled answer time without improving aggregate objective passes across the two development sets tested. It stays off by default. These results guide a configuration choice; they are not a general accuracy claim. <a class="link-inline" href="blog/choosing-a-thinking-default.html">Read the thinking-mode comparison</a>.</p></div>
+          <p id="exploration">Earlier model and runtime probes also shaped the requirements for session retention and source use. <a class="link-inline" href="blog/a-working-model-is-the-first-gate.html">That research is archived and was shelved in September 2026</a>.</p>
+          <div class="case-links"><a class="btn-pill" href="blog/">Browse Development Notes</a></div>
         </section>
 
         <section class="case-section" id="next">
-          <p class="eyebrow">08 · What comes next</p>
+          <p class="eyebrow">06 · What comes next</p>
           <h2 class="display display--tight">Validate the Product <em>in People’s Hands.</em></h2>
           <p>The Angrove beta is open now on TestFlight. An App Store release is next. I have not published adoption, retention, or learning-outcome results. The next product questions are whether people revisit saved Insights, check the source passages, and find the map useful.</p>
           <p>Ongoing engineering work focuses on phone lifecycle validation (backgrounding, memory warnings, and idle unloads), shorter waits around the engine restart, encryption migration and backup recovery, model delivery, and a supported-device matrix. Historical phone scores whose raw run artifacts were lost are not used as headline evidence here.</p>
@@ -254,6 +218,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html">Case Studies</a>
+      <a href="blog/">Development Notes</a>
       <a href="faq.html">FAQ</a>
       <a href="report.html">Report a Bug</a>
       <a href="privacy.html">Privacy</a>
@@ -265,6 +230,5 @@
 </footer>
 <script src="js/site.js"></script>
 <script src="js/murmuration.js?v=20261003-tap"></script>
-<script src="js/case-charts.js?v=20261008g"></script>
 </body>
 </html>

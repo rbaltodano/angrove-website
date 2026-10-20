@@ -154,7 +154,56 @@
     });
   }
 
-  const RENDER = { breakdown, sequence };
+  // Scores out of 40, one or more bars per row. Series (colors and legend) and rows come from the
+  // figure: data-series='[{"key","label","color"}]', data-rows='[{"label","note","bars":[{"key","value"}]}]'.
+  function scores(host, W) {
+    const figure = host.parentElement;
+    const series = JSON.parse(figure.dataset.series);
+    const rows = JSON.parse(figure.dataset.rows);
+    const byKey = Object.fromEntries(series.map((s) => [s.key, s]));
+    const max = 40, top = 26, labelH = 22, rowGap = 22;
+    const barCount = Math.max(...rows.map((r) => r.bars.length));
+    const barH = barCount > 1 ? 18 : 26, barGap = 4;
+    const rowH = labelH + barCount * barH + (barCount - 1) * barGap;
+    const H = top + rows.length * (rowH + rowGap);
+    const list = document.createElement('ul');
+    list.className = 'case-chart__legend';
+    for (const s of series) {
+      const item = document.createElement('li');
+      item.innerHTML = `<span class="case-chart__swatch" style="background:${s.color}"></span>${s.label}`;
+      list.appendChild(item);
+    }
+    host.appendChild(list);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'case-chart__svg', 'aria-hidden': 'false' }, host);
+    const tip = tooltip(host);
+    const sx = (v) => (v / max) * W;
+    for (let t = 0; t <= max; t += 10) {
+      el('line', { x1: sx(t), x2: sx(t), y1: top - 6, y2: H - rowGap + 4, class: 'case-chart__grid' }, svg);
+      el('text', { x: sx(t), y: 12, class: 'case-chart__tick', 'text-anchor': t === 0 ? 'start' : t === max ? 'end' : 'middle' }, svg).textContent = `${t}`;
+    }
+    rows.forEach((row, i) => {
+      const y0 = top + i * (rowH + rowGap);
+      const title = el('text', { x: 0, y: y0 + 14, class: 'case-chart__label' }, svg);
+      title.textContent = row.label;
+      if (row.note) {
+        const note = el('tspan', { class: 'case-chart__tick', dx: '8' }, title);
+        note.textContent = row.note;
+      }
+      const bar = el('g', { class: 'case-chart__grow case-chart__grow--x', style: `--i:${i}` }, svg);
+      const labels = el('g', { class: 'case-chart__after', style: `--i:${i}` }, svg);
+      let lastMark;
+      row.bars.forEach((b, j) => {
+        const y = y0 + labelH + j * (barH + barGap);
+        const w = sx(b.value);
+        lastMark = el('path', { d: endRounded(0, y, w, barH, 4, true), fill: byKey[b.key].color }, bar);
+        el('text', { x: w - 8, y: y + barH / 2 + 4, class: 'case-chart__inlabel', 'text-anchor': 'end' }, labels).textContent = `${b.value}`;
+      });
+      const detail = row.bars.map((b) => `${byKey[b.key].label}: ${b.value}/40`).join('<br>');
+      hit(svg, tip, { x: 0, y: y0, width: W, height: rowH }, `<strong>${row.label}${row.note ? ` · ${row.note}` : ''}</strong><br>${detail}`, lastMark);
+    });
+  }
+
+  const RENDER = { breakdown, sequence, scores };
   document.querySelectorAll('[data-case-chart]').forEach((figure) => {
     const plot = document.createElement('div');
     plot.className = 'case-chart__plot';

@@ -79,6 +79,7 @@
 .case-chart__base { stroke: rgba(34, 15, 1, 0.24); stroke-width: 1; }
 .case-chart__tick { font-family: var(--sans); font-size: 12px; fill: var(--paragraph-dim); }
 .case-chart__label { font-family: var(--sans); font-size: 14px; font-weight: 700; fill: var(--heading); }
+.case-chart__label .case-chart__tick { font-weight: 400; }
 .case-chart__inlabel { font-family: var(--sans); font-size: 13px; font-weight: 700; fill: var(--cream); }
 .case-chart svg [tabindex]:focus-visible { outline: none; stroke: var(--light-green); stroke-width: 2; }
 .case-chart figcaption { margin-top: 16px; font-size: 14px; line-height: 1.7; }

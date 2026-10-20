@@ -2670,3 +2670,15 @@ code.cmd, .faq-item__a code.cmd { padding: 4px 10px; border-radius: 8px; backgro
 }
 .cta__copy .creator-note { margin-top: 0; font-size: 13px; color: var(--light-green); }
 .creator-note { margin-top: 18px; font-size: 13px; line-height: 1.6; color: var(--light-green); }
+
+/* Leave room for Development Notes in the shared navigation. */
+@media (min-width: 1025px) and (max-width: 1250px) {
+  .nav__inner > .nav__links { gap: 16px; font-size: 14px; }
+  .nav__inner > .logo { font-size: 30px; gap: 10px; }
+  .nav__inner > .btn-pill { padding: 20px 24px; font-size: 14px; }
+}
+.nav.is-open .nav__links a:nth-child(6) { transition-delay: 0.28s; }
+.footer .nav__links { flex-wrap: wrap; justify-content: flex-end; }
+@media (max-width: 1024px) {
+  .footer .nav__links { justify-content: flex-start; }
+}

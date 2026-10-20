@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measure Before Choosing a Default — Angrove</title>
+<meta name="description" content="Four simulator runs tested whether native thinking earned its extra answer time in Angrove.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Angrove">
+<meta property="og:title" content="Measure Before Choosing a Default — Angrove">
+<meta property="og:description" content="Four simulator runs tested whether native thinking earned its extra answer time in Angrove.">
+<meta property="og:url" content="https://angrove.app/blog/choosing-a-thinking-default.html">
+<meta property="og:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Measure Before Choosing a Default — Angrove">
+<meta name="twitter:description" content="Four simulator runs tested whether native thinking earned its extra answer time in Angrove.">
+<meta name="twitter:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta name="twitter:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<link rel="canonical" href="https://angrove.app/blog/choosing-a-thinking-default.html">
+<link rel="icon" type="image/png" href="../assets/brand/favicon.png">
+<link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
+<link rel="stylesheet" href="../css/site.css?v=20261020-notes">
+<link rel="stylesheet" href="../css/case-study.css?v=20261020-scores">
+<link rel="stylesheet" href="../css/blog.css?v=20261020-notes">
+
+<meta property="article:author" content="Ryan Baltodano">
+<meta property="article:published_time" content="2026-10-02">
+
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner">
+    <a href="/" class="logo">
+      <span class="logo__leaf" aria-hidden="true"></span>
+      <span>Angrove</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/" aria-current="page">Dev Notes</a>
+      <a href="../faq.html">FAQ</a>
+    </nav>
+    <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Open menu"><span class="nav__burger" aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+<main id="main">
+  <section class="page-hero note-hero"><div class="page-hero__inner">
+    <a class="link-inline note-back" href="../blog/">← Development Notes</a>
+    <p class="eyebrow">Evaluation</p>
+    <h1 class="display display--tight">Measure Before <em>Choosing a Default.</em></h1>
+    <p class="lede">A model setting changes the experience of every question. I compared native thinking on and off before choosing Angrove’s default.</p>
+    <p class="case-byline">Ryan Baltodano · <time datetime="2026-10-02">October 2, 2026</time> · Thinking-mode evaluation</p>
+  </div></section>
+  <section class="section section--flush-top section--after-hero"><div class="container note-layout">
+    <article class="case-story note-story" aria-label="Measure Before Choosing a Default">
+      <div class="case-section">
+          <p>I compared native thinking on and off through the app pipeline in four completed simulator CPU runs on October 2, 2026. The same build and stock model answered two previously used 40-case development sets.</p>
+          <p class="case-table-hint">Swipe the table to see answer times.</p>
+          <div class="case-table-wrap" role="region" aria-label="Native thinking comparison" tabindex="0">
+            <table class="case-table"><caption>Native thinking comparison · Simulator CPU · 40 cases per set</caption><thead><tr><th scope="col">Development set</th><th scope="col">Thinking off</th><th scope="col">Thinking on</th><th scope="col">Median answer time<br>off / on</th></tr></thead><tbody><tr><th scope="row">Held-out</th><td>37/40</td><td>36/40</td><td>23.0 s / 43.7 s</td></tr><tr><th scope="row">Sealed-1</th><td>37/40</td><td>38/40</td><td>23.5 s / 47.6 s</td></tr><tr><th scope="row">Total objective passes</th><td>74/80</td><td>74/80</td><td>—</td></tr></tbody></table>
+          </div>
+          <p><strong>The decision:</strong> keep native thinking off by default. It showed no aggregate increase in objective passes here and roughly doubled answer time. That observation supports this configuration; it does not establish that thinking never helps.</p>
+          <aside class="case-note"><h2>What these numbers mean</h2><p>The scorer checks patterns and output constraints. It can miss substantive errors or penalize valid wording, so these scores are not a general accuracy percentage. Both sets had already been used for development. Times are conventional medians across all cases, including retrieval and any audit pass; they exclude model loading, queue wait, and UI reveal. They come from the simulator, so they compare the two settings rather than predict phone speed; <a class="link-inline" href="../blog/where-the-wait-goes.html">the phone figures have their own performance note</a>.</p></aside>
+          <p>The evaluation records retain the exact experiment build, model and fixture hashes, aggregate outcomes, and input-artifact hashes. Personal content and native logs are excluded from shared summaries. Original fixtures and scoring material remain in the private evaluation archive; the results above explain the decision but are not a complete independent replication kit.</p>
+          <p><a class="link-inline" href="../about.html#review-request">Request the evaluation methodology and evidence for review</a>.</p>
+          <p>Behavior tests separately cover model lifecycle, retrieval, source locators, conversation persistence, semantic membership, and encrypted-storage migration. Measured results on this page refer to the dated runs and configurations described alongside them.</p>
+</div>
+      <aside class="note-related" aria-label="Keep reading">
+        <p class="eyebrow">Keep reading</p><ul><li><a href="better-sources-bigger-model.html">Better Sources Beat a Bigger Model</a></li><li><a href="where-the-wait-goes.html">Where the Wait Actually Goes</a></li><li><a href="a-working-model-is-the-first-gate.html">A Working Model Is Only the First Gate</a></li></ul>
+        <p><a class="link-inline" href="../case-study.html">See how this fits into Angrove’s larger story</a></p>
+      </aside>
+    </article>
+  </div></section>
+</main>
+<footer class="footer">
+  <div class="footer__row">
+    <div class="footer__brand">
+      <a href="/" class="logo logo--footer">
+        <span class="logo__art">
+          <span class="logo__leaf" aria-hidden="true"></span>
+          <img src="../assets/brand/angrove-logo-light.png" alt="Angrove" width="185" height="56">
+        </span>
+      </a>
+      <p class="footer__tagline">A private place for serious questions. <a href="../guide.html#privacy">Encrypted on your device.</a></p>
+    </div>
+    <nav class="nav__links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/">Development Notes</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../report.html">Report a Bug</a>
+      <a href="../privacy.html">Privacy</a>
+    </nav>
+  </div>
+  <p class="footer__disclaimer">Angrove is a tool for private study and reflection. It is not a substitute for professional counseling, spiritual direction, or clergy.</p>
+  <p class="footer__legal">© 2026 Sine Viridian. All rights reserved.</p>
+  <p class="footer__wordmark" aria-hidden="true">Angrove</p>
+</footer>
+<script src="../js/site.js"></script>
+<script src="../js/murmuration.js?v=20261003-tap"></script>
+</body>
+</html>

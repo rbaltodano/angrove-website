@@ -1,7 +1,7 @@
 # Angrove — Website
 
 Source for [angrove.app](https://angrove.app): the product site, User Guide, FAQ, case studies,
-privacy policy, and bug-report form for Angrove, a private iOS study app whose language model runs
+Development Notes, privacy policy, and bug-report form for Angrove, a private iOS study app whose language model runs
 entirely on the iPhone. The app itself lives in
 [Angrove-iOS](https://github.com/rbaltodano/Angrove-iOS).
 
@@ -25,7 +25,10 @@ Then visit `http://localhost:8000`.
   model.html          Redirect to faq.html (the model question)
   privacy.html        Privacy Policy for the app and website (linked from every footer)
   about.html          Founder note, the four principles, engineering showcase preparation and review contact
-  case-study.html     Case Studies: current product, architecture, decisions, and supporting research
+  case-study.html     Case Studies: product story, architecture, key decisions, and links to evidence
+  blog/index.html     Development Notes: newest-first index of experiments and archived research
+  blog/*.html         Four standalone notes with dated methods, charts, and limitations
+  css/blog.css        Blog index and article layout; reuses case-study.css for evidence
   report.html         Bug report form that sends to the support inbox through Formspree
   css/site.css        All tokens and components
   css/demos.css       Internal-page interaction styles
@@ -94,9 +97,33 @@ The Nature of Evil conversation shows Corpus Grounded details and Summa Theologi
 Matching originals live in the iOS repo’s dated Screenshots directory.
 
 The page leads with the problem and Ryan’s role, followed by the current product, architecture,
-and engineering decisions. Measured evaluation and earlier model exploration follow as supporting
-evidence, with next steps last. Dates preserve the chronology of the work without making readers
-start with the oldest experiments. The existing URL remains `case-study.html`.
+and engineering decisions. A short evidence section explains what testing changed and links to
+standalone Development Notes; next steps close the story. The existing URL remains
+`case-study.html`. Its `#performance`, `#evaluation`, `#sources`, and `#exploration` fragments
+still land on the corresponding summary and article link, preserving existing references.
+
+## Development Notes
+
+`blog/` is the development blog, linked as “Dev Notes” in every primary navbar and
+“Development Notes” in every footer. It lists four notes, newest work first:
+
+- `blog/better-sources-bigger-model.html` — October 15–20 experiments comparing model size,
+  factual behavior, phone constraints, and retrieval. Distinguishes shared fetched evidence
+  from the first end-to-end Wikipedia prototype.
+- `blog/where-the-wait-goes.html` — October 8 iPhone timing and sustained-session measurements.
+- `blog/choosing-a-thinking-default.html` — October 2 simulator comparison of native thinking.
+- `blog/a-working-model-is-the-first-gate.html` — August–September exploration, explicitly
+  archived and shelved on September 25. This is historical reporting, not resumed research.
+
+Dates identify the work being reported. The migration preserves results, table values,
+chart data, methods, and limitations. `js/case-charts.js` and `css/case-study.css` are shared
+by the posts with charts; the case study no longer loads the chart script. Every post links
+back to the index and product story, with related notes for continued reading.
+
+Keep the index newest-first when adding posts. Use the existing article shell, include the
+experiment dates and tested configuration, distinguish unreleased work from product behavior,
+and carry limitations alongside results. Summarize lasting product decisions in the case
+study and link to their full notes rather than appending another experiment to that page.
 
 ## Availability and engineering references
 

@@ -22,7 +22,7 @@
 <meta name="twitter:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
 <link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-<link rel="stylesheet" href="css/site.css?v=20261019-footer-macos">
+<link rel="stylesheet" href="css/site.css?v=20261020-notes">
 </head>
 <body>
 
@@ -37,6 +37,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html">Case Studies</a>
+      <a href="blog/">Dev Notes</a>
       <a href="faq.html" aria-current="page">FAQ</a>
     </nav>
     <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
@@ -97,11 +98,11 @@
       <div class="faq__list">
           <details class="faq-item">
             <summary>Does anything I type leave my phone?</summary>
-            <div class="faq-item__a"><p>No. The model that answers you runs on your iPhone, and your conversations, Insights, and Insight Tree are stored with fully encrypted personal data on your device. The app makes no network requests to answer a question or build your tree. Its only network code downloads the model itself.</p><p>The <a href="case-study.html#architecture">Case Studies</a> explain the architecture and engineering decisions. <a href="about.html#review-request">Full-source review is available on request</a>.</p></div>
+            <div class="faq-item__a"><p>No. In the current public beta, the model that answers you runs on your iPhone, and your conversations, Insights, and Insight Tree are stored with fully encrypted personal data on your device. The app makes no network requests to answer a question or build your tree; its only network code downloads the model itself.</p><p>An optional Wikipedia search is in development and is not available in the public beta yet. It is planned to be off by default and send a few search keywords when the Library cannot support a question. <a href="blog/better-sources-bigger-model.html">Read the development note</a>.</p><p>The <a href="case-study.html#architecture">Case Studies</a> explain the architecture and engineering decisions. <a href="about.html#review-request">Full-source review is available on request</a>.</p></div>
           </details>
           <details class="faq-item">
             <summary>Does it work offline?</summary>
-            <div class="faq-item__a"><p>Yes. Once the model is on your phone, Angrove answers in airplane mode.</p></div>
+            <div class="faq-item__a"><p>Yes. Once the model is on your phone, Angrove answers in airplane mode. The planned optional Wikipedia search will need a connection; it is not part of the current public beta.</p></div>
           </details>
           <details class="faq-item">
             <summary>Is my data encrypted?</summary>
@@ -135,7 +136,7 @@
           </details>
           <details class="faq-item">
             <summary>How long do answers take?</summary>
-            <div class="faq-item__a"><p>On an iPhone 17, once the model is loaded, a one-sentence answer takes about 7 seconds and a 180-word answer about 18. Starting fresh adds 6–9 seconds to load the model. Answers currently appear all at once rather than word by word. Peak memory use stayed under 1.4 GB in testing. <a class="link-inline" href="case-study.html#performance">See the measurements.</a></p></div>
+            <div class="faq-item__a"><p>On an iPhone 17, once the model is loaded, a one-sentence answer takes about 7 seconds and a 180-word answer about 18. Starting fresh adds 6–9 seconds to load the model. Answers currently appear all at once rather than word by word. Peak memory use stayed under 1.4 GB in testing. <a class="link-inline" href="blog/where-the-wait-goes.html">See the measurements.</a></p></div>
           </details>
           <details class="faq-item">
             <summary>Where do answers come from?</summary>
@@ -193,6 +194,7 @@
       <a href="about.html">About</a>
       <a href="guide.html">User Guide</a>
       <a href="case-study.html">Case Studies</a>
+      <a href="blog/">Development Notes</a>
       <a href="faq.html">FAQ</a>
       <a href="report.html">Report a Bug</a>
       <a href="privacy.html">Privacy</a>

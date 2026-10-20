@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Working Model Is Only the First Gate — Angrove</title>
+<meta name="description" content="Earlier Gemma 12B and Qwen3-4B experiments showed why short generation, session retention, and trustworthy citations need separate checks.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Angrove">
+<meta property="og:title" content="A Working Model Is Only the First Gate — Angrove">
+<meta property="og:description" content="Earlier Gemma 12B and Qwen3-4B experiments showed why short generation, session retention, and trustworthy citations need separate checks.">
+<meta property="og:url" content="https://angrove.app/blog/a-working-model-is-the-first-gate.html">
+<meta property="og:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Working Model Is Only the First Gate — Angrove">
+<meta name="twitter:description" content="Earlier Gemma 12B and Qwen3-4B experiments showed why short generation, session retention, and trustworthy citations need separate checks.">
+<meta name="twitter:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
+<meta name="twitter:image:alt" content="Angrove wordmark and vine leaf above an Italian countryside landscape">
+<link rel="canonical" href="https://angrove.app/blog/a-working-model-is-the-first-gate.html">
+<link rel="icon" type="image/png" href="../assets/brand/favicon.png">
+<link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
+<link rel="stylesheet" href="../css/site.css?v=20261020-notes">
+<link rel="stylesheet" href="../css/case-study.css?v=20261020-scores">
+<link rel="stylesheet" href="../css/blog.css?v=20261020-notes">
+
+<meta property="article:author" content="Ryan Baltodano">
+
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner">
+    <a href="/" class="logo">
+      <span class="logo__leaf" aria-hidden="true"></span>
+      <span>Angrove</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/" aria-current="page">Dev Notes</a>
+      <a href="../faq.html">FAQ</a>
+    </nav>
+    <a class="btn-pill btn-beta" href="https://testflight.apple.com/join/qHDFeAUa">Download the iOS Beta</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Open menu"><span class="nav__burger" aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+<main id="main">
+  <section class="page-hero note-hero"><div class="page-hero__inner">
+    <a class="link-inline note-back" href="../blog/">← Development Notes</a>
+    <p class="eyebrow">Research archive</p>
+    <h1 class="display display--tight">A Working Model Is Only <em>the First Gate.</em></h1>
+    <p class="lede">An archive of the model and runtime exploration that preceded the E4B/LiteRT integration. This work is closed; the results describe the configurations tested at the time.</p>
+    <p class="case-byline">Ryan Baltodano · August–September 2026 research · Shelved <time datetime="2026-09-25">September 25, 2026</time></p>
+  </div></section>
+  <section class="section section--flush-top section--after-hero"><div class="container note-layout">
+    <article class="case-story note-story" aria-label="A Working Model Is Only the First Gate">
+      <div class="case-section">
+          <p>Before the current E4B/LiteRT integration, I explored larger Gemma packages and a smaller Qwen model through isolated llama.cpp Metal probes on a base iPhone 17. Those experiments tested whether alternative packages could sustain a useful session, and whether a model swap would fix source errors.</p>
+          <div class="case-decision"><h2>Gemma 4 12B: generation passed, retention failed.</h2><p>A 4.37 GB IQ2_M GGUF generated short text at 512-token context after reducing prefill to 32-token chunks. A retained-session trial produced 48 tokens, then terminated with signal 9 during a requested 40-second hold, correlated with system memory pressure. The available system report did not identify the probe as a specific jetsam victim. Successful short generation had not established enough headroom for a durable app session.</p></div>
+          <div class="case-decision"><h2>Qwen3-4B: smaller and feasible, but citations still needed work.</h2><p>The roughly 2.33 GiB Q4_K_M package passed bounded multi-turn probes at 2K and 4K context and a 40-second resident hold. A research-only adapter then exercised it in the actual conversation UI. Fine-tuning uncovered corrupted PDF article boundaries; cleaning the data and reformatting question/answer pairs improved output form, but a citation test still fabricated source text. That reinforced the need to evaluate retrieval and passage use separately from voice and fluency.</p></div>
+          <aside class="case-note"><h2>Historical exploration, not a model leaderboard.</h2><p>The tested smaller model was Qwen3-4B. Qwen3.5 appeared in a later candidate proposal; it does not inherit these results. Context sizes, token caps, packages, and tasks differed, so these are exploratory observations rather than a matched blind benchmark. The 12B and Qwen research was shelved on September 25, 2026. No experiments were rerun for this retrospective.</p></aside>
+          <p>The resulting development direction was Gemma 4 E4B and LiteRT-LM. The lesson is to count working buffers, KV cache, session retention, and factual behavior—not just model size or an attractive answer. <a class="link-inline" href="../about.html#review-request">Request the historical configurations and supporting records.</a></p>
+</div>
+      <aside class="note-related" aria-label="Keep reading">
+        <p class="eyebrow">Keep reading</p><ul><li><a href="better-sources-bigger-model.html">Better Sources Beat a Bigger Model</a></li><li><a href="where-the-wait-goes.html">Where the Wait Actually Goes</a></li><li><a href="choosing-a-thinking-default.html">Measure Before Choosing a Default</a></li></ul>
+        <p><a class="link-inline" href="../case-study.html">See how this fits into Angrove’s larger story</a></p>
+      </aside>
+    </article>
+  </div></section>
+</main>
+<footer class="footer">
+  <div class="footer__row">
+    <div class="footer__brand">
+      <a href="/" class="logo logo--footer">
+        <span class="logo__art">
+          <span class="logo__leaf" aria-hidden="true"></span>
+          <img src="../assets/brand/angrove-logo-light.png" alt="Angrove" width="185" height="56">
+        </span>
+      </a>
+      <p class="footer__tagline">A private place for serious questions. <a href="../guide.html#privacy">Encrypted on your device.</a></p>
+    </div>
+    <nav class="nav__links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../guide.html">User Guide</a>
+      <a href="../case-study.html">Case Studies</a>
+      <a href="../blog/">Development Notes</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../report.html">Report a Bug</a>
+      <a href="../privacy.html">Privacy</a>
+    </nav>
+  </div>
+  <p class="footer__disclaimer">Angrove is a tool for private study and reflection. It is not a substitute for professional counseling, spiritual direction, or clergy.</p>
+  <p class="footer__legal">© 2026 Sine Viridian. All rights reserved.</p>
+  <p class="footer__wordmark" aria-hidden="true">Angrove</p>
+</footer>
+<script src="../js/site.js"></script>
+<script src="../js/murmuration.js?v=20261003-tap"></script>
+</body>
+</html>
