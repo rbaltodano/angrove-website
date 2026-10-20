@@ -58,3 +58,7 @@
 }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .note-story h2 { font-family: var(--serif); font-weight: 400; font-size: 25px; line-height: 1.5; color: var(--heading); }
+.note-card__image img[src$="book-niche.jpg"], .note-cover img[src$="book-niche.jpg"] { object-position: 70% 60%; }
+.note-card__image img[src$="drafting-compass.jpg"], .note-cover img[src$="drafting-compass.jpg"] { object-position: 70% 70%; }
+.note-card__image img[src$="olive-arch.jpg"], .note-cover img[src$="olive-arch.jpg"] { object-position: 50% 40%; }
+.note-card__image img[src$="fig-basket.jpg"], .note-cover img[src$="fig-basket.jpg"] { object-position: 50% 55%; }
