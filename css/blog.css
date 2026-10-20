@@ -47,7 +47,7 @@
 .note-related { padding: 28px 32px; border-radius: 20px; background: var(--canvas-secondary); }
 @media (max-width: 860px) {
   .note-card--featured { flex-direction: column; }
-  .note-card--featured .note-card__image { flex: none; aspect-ratio: 16 / 9; min-height: 0; }
+  .note-card--featured .note-card__image { flex: none; aspect-ratio: auto; height: min(56.25vw, 300px); min-height: 0; }
   .note-card--featured .note-card__body { padding: 24px 28px 26px; }
 }
 @media (max-width: 700px) {
