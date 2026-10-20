@@ -9,7 +9,7 @@
 .note-card__image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--border); }
 .note-card__image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 .note-card:hover .note-card__image img { transform: scale(1.04); }
-.note-card__tag, .note-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--canvas); color: var(--light-green); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.4; }
+.note-card__tag, .note-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--canvas); color: var(--light-green); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.4; }
 .note-card__tag { position: absolute; top: 16px; left: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
 .note-card__body { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 24px 28px 26px; }
 .note-card__meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 13px; line-height: 1.6; color: var(--paragraph-dim); }
@@ -24,8 +24,8 @@
 .note-card__more { color: var(--light-green); font-weight: 700; }
 .note-card__more:hover { text-decoration: underline; text-underline-offset: 4px; }
 .note-card--featured { grid-column: 1 / -1; flex-direction: row; }
-.note-card--featured .note-card__image { flex: 1.15; aspect-ratio: auto; min-height: 340px; }
-.note-card--featured .note-card__body { flex: 1; justify-content: center; padding: 36px 40px; }
+.note-card--featured .note-card__image { flex: 1; aspect-ratio: auto; min-height: 280px; }
+.note-card--featured .note-card__body { flex: 1.3; justify-content: center; gap: 12px; padding: 28px 36px; }
 .note-card--featured h2 { font-size: clamp(26px, 2.8vw, 34px); }
 .note-card--featured .note-card__foot { margin-top: 8px; }
 .note-layout { max-width: 850px; }
