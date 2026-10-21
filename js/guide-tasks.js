@@ -11,7 +11,7 @@
   var card = root.querySelector('.mt-card');
   var NS = 'http://www.w3.org/2000/svg';
   var WORDS = ['prudence', 'grace', 'virtue', 'charity', 'habit'];
-  var EXIT = 400, STAGGER = 150, CLEAR_AFTER = 700;
+  var EXIT = 240, CLEAR_AFTER = 700;
 
   var completed = [], current = null, upcoming = [];
   var nextId = 1, wordIndex = 0, runTimer = null, clearTimer = null;
@@ -153,18 +153,26 @@
     var before = {};
     Object.keys(rows).forEach(function (id) { before[id] = rows[id].getBoundingClientRect().top; });
 
-    // Rows leave with a 24 pt slide and fade, staggered 0.15 s by their place in the list.
+    // Keep each departing row in its slot while it fades and blurs. Its removal
+    // starts the height/reflow animation only after the visual exit has finished.
     var keep = {};
     tasks.forEach(function (t) { keep[t.id] = true; });
-    var leaving = Object.keys(rows).filter(function (id) { return !keep[id]; });
-    leaving.forEach(function (id, n) {
-      var row = rows[id];
-      delete rows[id];
-      var index = Array.prototype.indexOf.call(rowsEl.children, row);
-      row.classList.add('is-leaving');
-      row.style.transitionDelay = reduceMotion ? '0s' : (Math.max(0, index) * STAGGER) / 1000 + 's';
-      setTimeout(function () { row.remove(); fitCard(); }, reduceMotion ? 0 : EXIT + index * STAGGER);
+    var leaving = Object.keys(rows).filter(function (id) {
+      return !keep[id] && !rows[id].classList.contains('is-leaving');
     });
+    leaving.forEach(function (id) {
+      var row = rows[id];
+      row.classList.add('is-leaving');
+      row.inert = true;
+      row.setAttribute('aria-hidden', 'true');
+    });
+    if (leaving.length) setTimeout(function () {
+      var positions = rowPositions();
+      leaving.forEach(function (id) { rows[id].remove(); delete rows[id]; });
+      updateEmpty();
+      fitCard();
+      animateReflow(positions);
+    }, reduceMotion ? 0 : EXIT);
 
     tasks.forEach(function (t, i) {
       var row = rows[t.id];
@@ -176,32 +184,56 @@
       setPhase(row, t === current ? 'current' : completed.indexOf(t) >= 0 ? 'completed' : 'upcoming');
       row.classList.toggle('is-dragging', drag && drag.id === t.id);
     });
-    // Order: live rows in queue order; leaving rows stay where they are until they're gone.
+    // Reorder live rows around the slots still occupied by departing rows.
     var ordered = tasks.map(function (t) { return rows[t.id]; });
-    ordered.forEach(function (row, i) {
+    var slots = Array.prototype.slice.call(rowsEl.children).filter(function (row) {
+      return row !== empty && row.classList.contains('is-leaving');
+    });
+    var layout = ordered.slice();
+    slots.forEach(function (row) {
+      var index = Array.prototype.indexOf.call(rowsEl.children, row);
+      layout.splice(Math.min(index, layout.length), 0, row);
+    });
+    layout.forEach(function (row, i) {
       var at = rowsEl.children[i];
       if (at !== row) rowsEl.insertBefore(row, at || null);
     });
-
-    if (!tasks.length) { if (!empty.parentNode) rowsEl.appendChild(empty); }
-    else if (empty.parentNode) empty.remove();
+    updateEmpty();
 
     countEl.hidden = !tasks.length;
     countEl.textContent = (completed.length + (current ? 1 : 0)) + ' of ' + tasks.length;
     fitCard();
 
+    animateReflow(before);
+  }
+
+  function updateEmpty() {
+    // Show idle only once the last departing row has faded away.
+    if (!Object.keys(rows).length) {
+      if (!empty.parentNode) rowsEl.appendChild(empty);
+    } else if (empty.parentNode) empty.remove();
+  }
+
+  function rowPositions() {
+    var positions = {};
+    Object.keys(rows).forEach(function (id) { positions[id] = rows[id].getBoundingClientRect().top; });
+    return positions;
+  }
+
+  function animateReflow(before) {
     if (reduceMotion) return;
-    ordered.forEach(function (row) {
-      var was = before[row.dataset.id];
+    Object.keys(rows).forEach(function (id) {
+      var row = rows[id];
+      if (row.classList.contains('is-leaving')) return;
+      var was = before[id];
       if (was === undefined) return;
       var dy = was - row.getBoundingClientRect().top;
       if (!dy) return;
-      row.style.transition = 'none';
-      row.style.translate = '0 ' + dy + 'px';
-      requestAnimationFrame(function () {
-        row.style.transition = '';
-        row.style.translate = '';
-      });
+      // Animate translate alone so an interrupted reorder cannot suppress a row's fade.
+      if (row.reflow) row.reflow.cancel();
+      row.reflow = row.animate([
+        { translate: '0 ' + dy + 'px' }, { translate: '0 0' }
+      ], { duration: 360, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
     });
   }
 
@@ -221,7 +253,7 @@
 
   var drag = null;
   function beginDrag(e, row, task) {
-    if (row.dataset.phase !== 'upcoming' || e.target.closest('button')) return;
+    if (row.classList.contains('is-leaving') || row.dataset.phase !== 'upcoming' || e.target.closest('button')) return;
     e.preventDefault();
     drag = { id: task.id, y: e.clientY, started: false, pointer: e.pointerId, row: row };
     row.setPointerCapture(e.pointerId);
