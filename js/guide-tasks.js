@@ -11,7 +11,7 @@
   var card = root.querySelector('.mt-card');
   var NS = 'http://www.w3.org/2000/svg';
   var WORDS = ['prudence', 'grace', 'virtue', 'charity', 'habit'];
-  var EXIT = 240, CLEAR_AFTER = 700;
+  var EXIT = 240, RESIZE = 360, CLEAR_AFTER = 700;
 
   var completed = [], current = null, upcoming = [];
   var nextId = 1, wordIndex = 0, runTimer = null, clearTimer = null;
@@ -127,13 +127,30 @@
     if (row.dataset.phase === phase) return;
     row.dataset.phase = phase;
     var status = row.querySelector('.mt-row__status');
-    status.innerHTML = '';
-    status.appendChild(svg(ICON[phase], 'mt-icon mt-icon--' + phase));
+    // Keep the outgoing wheel alive while it fades into blur, and reveal the
+    // replacement in the same fixed slot. Never clear the icon between phases.
+    var outgoing = Array.prototype.slice.call(status.children).filter(function (layer) {
+      return !layer.classList.contains('is-leaving');
+    });
+    outgoing.forEach(function (layer) {
+      layer.classList.remove('is-entering');
+      layer.classList.add('is-leaving');
+      setTimeout(function () { layer.remove(); }, EXIT);
+    });
+    var layer = document.createElement('span');
+    layer.className = 'mt-row__status-layer' + (outgoing.length ? ' is-entering' : '');
+    layer.setAttribute('aria-hidden', 'true');
+    layer.appendChild(svg(ICON[phase], 'mt-icon mt-icon--' + phase));
     if (phase === 'current') {
       var spin = document.createElement('span');
       spin.className = 'mt-spin';
       spin.appendChild(svg(ICON.arc, 'mt-icon'));
-      status.appendChild(spin);
+      layer.appendChild(spin);
+    }
+    status.appendChild(layer);
+    if (outgoing.length) {
+      void layer.offsetWidth;
+      requestAnimationFrame(function () { layer.classList.remove('is-entering'); });
     }
     var action = row.querySelector('.mt-row__action');
     action.innerHTML = '';
@@ -179,7 +196,12 @@
       if (!row) {
         row = rows[t.id] = makeRow(t);
         row.classList.add('is-entering');
-        requestAnimationFrame(function () { requestAnimationFrame(function () { row.classList.remove('is-entering'); }); });
+        row.inert = true;
+        setTimeout(function () {
+          if (row.classList.contains('is-leaving')) return;
+          row.classList.remove('is-entering');
+          row.inert = false;
+        }, reduceMotion ? 0 : RESIZE);
       }
       setPhase(row, t === current ? 'current' : completed.indexOf(t) >= 0 ? 'completed' : 'upcoming');
       row.classList.toggle('is-dragging', drag && drag.id === t.id);
@@ -253,7 +275,7 @@
 
   var drag = null;
   function beginDrag(e, row, task) {
-    if (row.classList.contains('is-leaving') || row.dataset.phase !== 'upcoming' || e.target.closest('button')) return;
+    if ((row.classList.contains('is-leaving') || row.classList.contains('is-entering')) || row.dataset.phase !== 'upcoming' || e.target.closest('button')) return;
     e.preventDefault();
     drag = { id: task.id, y: e.clientY, started: false, pointer: e.pointerId, row: row };
     row.setPointerCapture(e.pointerId);

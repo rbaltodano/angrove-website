@@ -2254,7 +2254,7 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   border-radius: 36px;
   color: rgba(74, 50, 28, 0.5625);   /* paragraphText at 75% */
   overflow: clip;
-  /* Rows fade out first; the card then settles to their new height. */
+  /* Make room before arrivals sharpen in; shrink after departures blur out. */
   transition: height 0.36s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mt-card__head { display: flex; align-items: baseline; justify-content: space-between; }
@@ -2274,14 +2274,20 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   transition: translate 0.36s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.24s ease-out, filter 0.24s ease-out, scale 0.25s ease;
 }
 .mt-row[data-phase="upcoming"] { cursor: grab; }
-.mt-row.is-entering { opacity: 0; transition: none; }
+.mt-row.is-entering { opacity: 0; filter: blur(8px); pointer-events: none; }
 .mt-row.is-leaving { opacity: 0; filter: blur(8px); pointer-events: none; }
 @media (prefers-reduced-motion: reduce) {
   .mt-card, .mt-row { transition: none; }
-  .mt-row.is-leaving { filter: none; }
+  .mt-row.is-entering, .mt-row.is-leaving { filter: none; }
 }
 .mt-row.is-dragging { opacity: 0.35; scale: 0.97; transform-origin: left center; cursor: grabbing; }
 .mt-row__status { position: relative; width: 14px; height: 14px; flex: none; display: grid; place-items: center; }
+/* Status changes share the row's blur/fade timing without changing its size. */
+.mt-row__status-layer { position: absolute; inset: 0; display: grid; place-items: center; transition: opacity 0.24s ease-in-out, filter 0.24s ease-in-out; }
+.mt-row__status-layer.is-entering, .mt-row__status-layer.is-leaving { opacity: 0; filter: blur(8px); }
+@media (prefers-reduced-motion: reduce) {
+  .mt-row__status-layer.is-entering, .mt-row__status-layer.is-leaving { filter: none; }
+}
 .mt-row__title { flex: 1; min-width: 0; margin-right: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mt-row__action { width: 14px; height: 14px; flex: none; display: grid; place-items: center; padding: 0; border: 0; background: none; color: var(--paragraph); cursor: pointer; }
 .mt-row__action[hidden] { display: none; }
