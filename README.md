@@ -19,6 +19,7 @@ Then visit `http://localhost:8000`.
 ```
 (repository root)
   index.html          Home (built from Figma "source-of-truth" / Home, node 169:7019)
+  mac.html            Angrove for Mac (coming Dec. 15): Boards, split view, and model choice
   guide.html          The app's User Guide (Settings → User Guide) word for word: First Five Minutes, eleven topics, Try It app windows
   faq.html            Common questions: release, cost, privacy, the model and its sources
   features.html       Redirect to guide.html (also how-it-works.html, insight-tree.html)

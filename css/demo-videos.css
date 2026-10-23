@@ -1,9 +1,14 @@
-/* Real app recordings: shared by the User Guide and Case Studies. */
+/* Real app recordings: shared by the User Guide and Case Studies. Each plays once, muted, when it
+   scrolls into view (js/site.js), with rounded corners; the caption links the full clip with sound. */
 .demo-collection { display: grid; gap: 24px; scroll-margin-top: 112px; }
-.demo-videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; align-items: start; }
-.demo-video { min-width: 0; margin: 0; padding: 20px; border: 1px solid var(--border); border-radius: 24px; background: var(--canvas-secondary); scroll-margin-top: 112px; }
-.demo-video video { display: block; width: 100%; max-width: 300px; height: auto; margin-inline: auto; border-radius: 16px; background: #151512; }
-.demo-video figcaption { display: grid; gap: 12px; margin-top: 20px; font-size: 14px; line-height: 1.7; color: var(--paragraph); }
+.demo-videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 40px 24px; align-items: start; }
+.demo-video { min-width: 0; margin: 0; scroll-margin-top: 112px; }
+.demo-video video {
+  display: block; width: 100%; max-width: 260px; height: auto; margin-inline: auto;
+  border-radius: 32px; background: #1D1A17;
+  box-shadow: 0 30px 60px -28px rgba(34, 15, 1, 0.45);
+}
+.demo-video figcaption { display: grid; gap: 12px; margin-top: 24px; font-size: 14px; line-height: 1.7; color: var(--paragraph); }
 .demo-video h3 { margin: 0; font-family: var(--serif); font-size: 21px; font-weight: 400; line-height: 1.4; color: var(--heading); }
 .demo-video p { margin: 0; }
-.demo-video video:focus-visible, .demo-video a:focus-visible { outline: 2px solid var(--light-green); outline-offset: 4px; }
+.demo-video a:focus-visible { outline: 2px solid var(--light-green); outline-offset: 4px; }

@@ -117,6 +117,8 @@
       });
     }, { threshold: 0.4, rootMargin: '0px 0px -8% 0px' });
     Array.prototype.forEach.call(headlines, function (headline) {
+      // The Mac page's heading has its own entrance (js/heading-demo.js).
+      if (headline.hasAttribute('data-heading-demo')) return;
       var count = 0;
       (function walk(node) {
         Array.prototype.slice.call(node.childNodes).forEach(function (child) {
@@ -175,4 +177,21 @@
       if (item.open && !anim) item.classList.add('is-open');
     });
   });
+})();
+
+// Videos marked data-play-in-view play once, muted and without controls, the first time most of
+// the video is on screen. With reduced motion they rest on their poster frame.
+(function () {
+  var videos = document.querySelectorAll('video[data-play-in-view]');
+  if (!videos.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var seen = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      seen.unobserve(entry.target);
+      var playing = entry.target.play();
+      if (playing && playing.catch) playing.catch(function () {});
+    });
+  }, { threshold: 0.6 });
+  Array.prototype.forEach.call(videos, function (video) { seen.observe(video); });
 })();

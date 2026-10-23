@@ -3,6 +3,7 @@
 // out from the pointer every 2 seconds, the cadence of the app's hover pulse on an Insight.
 // data-dot-color sets the dot color as "r, g, b". A "dotfield:ripple" event on the section, with
 // detail { x, y, strength } in client coordinates, sends the app's ripple out across the dots.
+// data-dot-rest="hidden" leaves the dots unseen between ripples.
 (function () {
   var fields = document.querySelectorAll('[data-dot-field]');
   if (!fields.length) return;
@@ -24,6 +25,8 @@
 
   Array.prototype.forEach.call(fields, function (root) {
     var color = root.getAttribute('data-dot-color') || '255, 250, 240';
+    // data-dot-rest="hidden": the dots rest invisible and only show in a ripple, as on a Board.
+    var restsHidden = root.getAttribute('data-dot-rest') === 'hidden';
     var canvas = document.createElement('canvas');
     canvas.className = 'dot-field';
     canvas.setAttribute('aria-hidden', 'true');
@@ -82,7 +85,7 @@
               boost += bump * bump * wv.gain;
             }
           }
-          var o = (blobOpacity(x, y, time) + boost) * 1.6;
+          var o = ((restsHidden ? 0 : blobOpacity(x, y, time)) + boost) * 1.6;
           if (o < 0.012) continue;
           ctx.fillStyle = 'rgba(' + color + ',' + Math.min(o, 0.7).toFixed(3) + ')';
           ctx.fillRect(x - 0.9, y - 0.9, 1.8, 1.8);

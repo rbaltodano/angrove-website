@@ -2692,3 +2692,73 @@ code.cmd, .faq-item__a code.cmd { padding: 4px 10px; border-radius: 8px; backgro
 @media (max-width: 1024px) {
   .footer .nav__links { justify-content: flex-start; }
 }
+
+/* ---------- Mac page ---------- */
+
+/* Only on Mac: a wide window first (the demo video's place), then one row per feature. */
+.mac-stage { margin: 0 auto 120px; max-width: 1180px; }
+.mac-stage img, .mac-shot { width: 100%; height: auto; max-width: none; }
+/* Window captures carry a transparent shadow margin; pull it out so the window itself aligns. */
+.mac-shot { width: 108%; margin: 0 -4%; }
+.mac-rows .row__visual { display: block; }
+
+/* Home: the Mac teaser, one window and a link to the Mac page. */
+.mac-teaser { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 64px; }
+.mac-teaser__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+.mac-teaser__copy > .eyebrow { margin-bottom: -16px; }
+.mac-teaser__copy .facts { margin-top: 0; }
+.mac-teaser__copy .link-arrow { color: var(--light-green); border-color: rgba(134, 128, 62, 0.5); }
+.mac-teaser__visual img { width: 108%; height: auto; max-width: none; margin: 0 -4%; }
+
+@media (max-width: 1024px) {
+  .mac-stage { margin-bottom: 80px; }
+  .mac-teaser { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+}
+
+/* Mac page hero (js/heading-demo.js): the heading is typed as a Board's /heading command, then
+   dragged into place. Until the script finishes, the heading itself waits unseen. */
+.heading-demo [data-heading-demo] { opacity: 0; }
+.page-hero--board .page-hero__inner { position: relative; }
+.demo-cmd {
+  position: absolute; z-index: 1; margin: 0; opacity: 0; white-space: nowrap; text-align: left;
+  font: 400 18px/1.65 var(--sans); color: var(--heading); /* the .lede's size */
+}
+.demo-cmd.is-open { opacity: 1; }
+.demo-cmd__command.is-sweeping {
+  background: linear-gradient(90deg, var(--light-green) var(--from), var(--heading) var(--to));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.demo-cmd__command.is-command { color: var(--light-green); }
+.demo-cmd__caret { display: inline-block; width: 2px; height: 1.1em; margin-left: 1px; vertical-align: -0.18em; background: var(--light-green); animation: demo-caret 1s steps(1) infinite; }
+@keyframes demo-caret { 50% { opacity: 0; } }
+/* The pointer's wrapper sits at its hot spot, the arrow's tip. */
+.demo-cursor { position: absolute; left: 0; top: 0; z-index: 2; width: 0; height: 0; pointer-events: none; }
+.demo-cursor__art { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.demo-cursor svg { position: absolute; width: 28px; height: 28px; display: block; filter: drop-shadow(0 2px 3px rgba(18, 15, 12, 0.25)); }
+.demo-cursor__arrow { left: -6px; top: -3px; }
+.demo-cursor__arrow path { fill: var(--ink); stroke: var(--cream); stroke-width: 1.4; stroke-linejoin: round; }
+/* The heading's grip, resize box, and the alignment guide, in the app's light green. */
+.heading-demo [data-heading-demo] { position: relative; }
+.demo-grip { position: absolute; width: 11px; height: 18px; opacity: 0; }
+.demo-grip svg { display: block; width: 100%; height: 100%; fill: var(--light-green); opacity: 0.75; }
+.demo-box {
+  position: absolute; border: 1px solid rgba(134, 128, 62, 0.5); pointer-events: none; opacity: 0; transition: opacity 0.15s ease-out;
+  -webkit-mask-image: radial-gradient(circle 48px at var(--px, -999px) var(--py, -999px), #000 24px, transparent 48px);
+  mask-image: radial-gradient(circle 48px at var(--px, -999px) var(--py, -999px), #000 24px, transparent 48px);
+}
+.demo-box.is-near { opacity: 1; }
+.demo-box i { position: absolute; width: 7px; height: 7px; background: var(--canvas); border: 1px solid rgba(134, 128, 62, 0.5); }
+.demo-box i:nth-child(1) { left: -4px; top: -4px; }
+.demo-box i:nth-child(2) { right: -4px; top: -4px; }
+.demo-box i:nth-child(3) { left: -4px; bottom: -4px; }
+.demo-box i:nth-child(4) { right: -4px; bottom: -4px; }
+/* Faded over its first and last quarter, drawn from its center outward (WorktreeGuideLine). */
+.demo-guide {
+  position: absolute; width: 1px; opacity: 0; transform: scaleY(0); pointer-events: none;
+  background: linear-gradient(rgba(134, 128, 62, 0), var(--light-green) 25%, var(--light-green) 75%, rgba(134, 128, 62, 0));
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.demo-guide.is-shown { opacity: 0.4; transform: none; }
+.demo-guide.is-leaving { opacity: 0; transform: none; }
+/* A screen recording of the app window, cropped to it, with the window's corners and shadow. */
+.mac-video { display: block; width: 100%; height: auto; border-radius: 1.2% / 1.9%; background: var(--canvas-dark); box-shadow: 0 30px 60px -28px rgba(18, 15, 12, 0.55), 0 0 0 1px rgba(18, 15, 12, 0.08); }
