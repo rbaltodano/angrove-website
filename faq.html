@@ -10,6 +10,7 @@
 <meta property="og:title" content="FAQ — Angrove">
 <meta property="og:description" content="Answers to common questions about Angrove: release, cost, fully encrypted personal storage, the on-device model, and its sources.">
 <meta property="og:url" content="https://angrove.app/faq.html">
+<link rel="canonical" href="https://angrove.app/faq.html">
 <meta property="og:image" content="https://angrove.app/assets/brand/social-sharing-image.png?v=f2dc5059dd69">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
@@ -23,6 +24,173 @@
 <link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="stylesheet" href="css/site.css?v=20261022-mac">
+<!-- faq-structured-data:start -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://angrove.app/faq.html#faq",
+  "url": "https://angrove.app/faq.html",
+  "about": {
+    "@id": "https://angrove.app/#app"
+  },
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Angrove?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A private study companion for iPhone. You ask serious questions about philosophy, theology, and history, and Angrove answers with the primary sources in its Library. Terms you save become Insights, and your Insights grow into a map of your thinking called the Insight Tree. The User Guide walks through every part of it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When can I get it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Angrove beta is open now for iPhone through TestFlight. An App Store release is next. Download the iOS Beta to get started. If you don’t have TestFlight installed, Apple will guide you through installing it first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nothing. Angrove is free, with no subscription and no paywalled features, and that’s meant to stay true."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. There’s nothing to sign up for or log in to."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which iPhones will it run on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It’s built and tested on iPhone 17, with 8 GB of memory. Check the TestFlight listing for compatibility with your device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who makes it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ryan, one person building it in the open. You can read why on the About Case Studies page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does anything I type leave my phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. In the current public beta, the model that answers you runs on your iPhone, and your conversations, Insights, and Insight Tree are stored with fully encrypted personal data on your device. The app makes no network requests to answer a question or build your tree; its only network code downloads the model itself. An optional Wikipedia search is in development and is not available in the public beta yet. It is planned to be off by default and send a few search keywords when the Library cannot support a question. Read the development note. The Case Studies explain the architecture and engineering decisions. Full-source review is available on request."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once the model is on your phone, Angrove answers in airplane mode. The planned optional Wikipedia search will need a connection; it is not part of the current public beta."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data encrypted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fully Encrypted. Your saved personal data is encrypted on your device with AES-256-GCM. This includes conversations, attachments, saved Insights, Study Topics, personal settings, and local backups. Apple Keychain protects the keys. Encryption is automatic and does not require a password from you. Conversation exports are readable JSON. Copied text, screenshots, notification previews, and the optional Lock Screen widget display are outside the app’s encrypted storage. Read about encryption and recovery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my conversations backed up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Angrove keeps encrypted app data on your phone, including encrypted local conversation backups. iOS may include that data in device backups. To restore it on another phone, restore both the app data and its Keychain through an encrypted device backup or a supported transfer that preserves both. Angrove cannot recover content if the encryption key is lost. Apple manages device-backup protection; we do not claim end-to-end encryption for iCloud Backup. Older backups and exports are unchanged. You can also export conversations in Settings → Privacy & Data. An export is readable JSON, is not encrypted, and holds conversations only, not Insights or settings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I lock the app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Turn on App Lock in Settings → Privacy & Data to require Face ID, and choose how soon it locks. Your saved personal data is already fully encrypted, whether App Lock is on or off."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I delete my data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Deleting a conversation removes it from the active app library; older local or device backups may still contain it. Clear Insight Tree removes saved Insights and tree data but keeps conversations. Deleting the app removes its app container. iOS may retain Keychain keys and system-managed backups separately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What model does Angrove use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gemma 4 E4B, instruction-tuned, from the LiteRT Community package. It runs on your iPhone’s GPU through Google’s LiteRT-LM runtime and is about 3.7 GB. It isn’t fine-tuned: a fine-tuned version was tested and set aside because it invented citations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long do answers take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On an iPhone 17, once the model is loaded, a one-sentence answer takes about 7 seconds and a 180-word answer about 18. Starting fresh adds 6–9 seconds to load the model. Answers currently appear all at once rather than word by word. Peak memory use stayed under 1.4 GB in testing. See the measurements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do answers come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Library holds 37 primary works and 51,836 passages, from Scripture and the Church Fathers to Aristotle, the councils, the confessions, and classical history. Answers cite the passages they draw on, and every source opens in full so you can read it in its own words."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it be wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Answers can make mistakes, so check important claims against their sources. That’s why the sources are one tap away."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it a replacement for a pastor or counselor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Angrove is a tool for private study and reflection. It is not a substitute for professional counseling, spiritual direction, or clergy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens in a very long conversation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The model holds about 4,000 tokens of a conversation at a time. Type /compact to summarize older parts so Angrove can keep going. You still see everything on screen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does it do one thing at a time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because it runs entirely on your phone. Anything else you ask for waits in line, and Model Tasks shows that line so you can stop, remove, or reorder what’s next. See Model Tasks in the guide."
+      }
+    }
+  ]
+}
+</script>
+<!-- faq-structured-data:end -->
 </head>
 <body>
 
@@ -131,7 +299,7 @@
       <div class="faq__list">
           <details class="faq-item">
             <summary>What model does Angrove use?</summary>
-            <div class="faq-item__a"><p>Gemma 4 E4B, instruction-tuned, from the LiteRT Community package. It runs on your iPhone’s GPU through Google’s LiteRT-LM runtime and is about 3.7 GB. It isn’t fine-tuned: a fine-tuned version was tested and set aside because it invented citations.</p></div>
+            <div class="faq-item__a"><p><a class="link-inline" href="https://ai.google.dev/gemma" target="_blank" rel="noopener">Gemma 4</a> E4B, instruction-tuned, from the LiteRT Community package. It runs on your iPhone’s GPU through Google’s <a class="link-inline" href="https://github.com/google-ai-edge/LiteRT-LM" target="_blank" rel="noopener">LiteRT-LM</a> runtime and is about 3.7 GB. It isn’t fine-tuned: a fine-tuned version was tested and set aside because it invented citations.</p></div>
           </details>
           <details class="faq-item">
             <summary>How long do answers take?</summary>

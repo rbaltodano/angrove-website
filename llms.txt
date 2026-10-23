@@ -1,0 +1,26 @@
+# Angrove
+
+> Angrove is a free, private study app for iPhone for the rigorous study of philosophy, history, and theology. Its language model, Google's Gemma 4 E4B, runs on the iPhone, so questions are not sent to a model server, and answers work offline once the model is downloaded. Answers are grounded in a Library of 37 primary works (51,836 passages) and cite the passages they draw on. Saved personal data is encrypted on the device.
+
+Angrove is in public beta on iPhone through TestFlight; an App Store release is next. Angrove for Mac is planned for December 15, 2026. It needs no account. It is built by Ryan Baltodano and published by Sine Viridian.
+
+Answers can be wrong, so the app keeps every cited source one tap away. Angrove is a tool for private study and reflection, not a substitute for professional counseling, spiritual direction, or clergy.
+
+## Product
+
+- [Home](https://angrove.app/): what Angrove is, its three commitments (privacy, grounded answers, personalization), the Insight Tree, and the Library
+- [FAQ](https://angrove.app/faq.html): release, cost, which iPhones, data and encryption, the model, answer speed, and limits
+- [User Guide](https://angrove.app/guide.html): asking questions, Insights, the Insight Tree, Midpoints, Study in 3D, Model Tasks, and privacy settings
+- [Angrove for Mac](https://angrove.app/mac.html): Boards, a conversation beside its Insight Tree, and a choice of on-device models
+- [Privacy Policy](https://angrove.app/privacy.html): what stays on the phone and the few cases where data leaves it
+
+## Engineering
+
+- [Case Studies](https://angrove.app/case-study.html): architecture, key decisions, and evidence for on-device inference, local retrieval, and encrypted storage
+- [Development Notes](https://angrove.app/blog/): dated experiments and measurements
+- [Source code (iOS)](https://github.com/rbaltodano/Angrove-iOS)
+
+## Optional
+
+- [About](https://angrove.app/about.html): why Angrove exists and who builds it
+- [Report a Bug](https://angrove.app/report.html)

@@ -48,6 +48,10 @@ Then visit `http://localhost:8000`.
   assets/home/        Images exported from Figma
   assets/brand/       Brand assets, including boot leaf frames and dots from the app
   assets/app/         Real app screenshots and the Study demo video (from Angrove-iOS/Documentation)
+  robots.txt          Allows all crawlers, including AI search and training crawlers; points to the sitemap
+  sitemap.xml         Indexable pages (redirect stubs and the bug form are left out); update lastmod when a page changes
+  llms.txt            Plain-text product summary and key links for AI tools (an optional convention)
+  tools/faq-structured-data.py  Rebuilds faq.html's FAQPage JSON-LD from the visible questions; run after editing the FAQ
 ```
 
 Each page repeats the same header and footer markup; update all of them together.
@@ -161,3 +165,10 @@ Link GitHub README demos to `https://angrove.app/case-study.html#demos` or the i
 
 Copyright © 2026 Ryan Baltodano (Sine Viridian). All rights reserved. The source is published
 for reference and review; see [`LICENSE`](LICENSE). Bundled fonts keep their own licenses.
+
+## Search and structured data
+
+Every indexable page has one title, description, canonical URL, and Open Graph/Twitter card.
+JSON-LD lives in each page's `<head>`: Organization, Person, WebSite, and MobileApplication on Home
+(shared `@id`s such as `https://angrove.app/#app`), FAQPage on the FAQ, AboutPage, Blog, and
+BlogPosting. Keep it matching the visible copy: no ratings, reviews, or features the page does not state.
