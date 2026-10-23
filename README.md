@@ -50,6 +50,7 @@ Then visit `http://localhost:8000`.
   assets/app/         Real app screenshots and the Study demo video (from Angrove-iOS/Documentation)
   robots.txt          Allows search and AI answer engines; blocks model-training crawlers; points to the sitemap
   sitemap.xml         Indexable pages (redirect stubs and the bug form are left out); update lastmod when a page changes
+  c2c78ecd60a471dae86c7d25d879303b.txt  IndexNow key: lets Bing and other IndexNow engines accept URL submissions for this site
   llms.txt            Plain-text product summary and key links for AI tools (an optional convention)
   tools/faq-structured-data.py  Rebuilds faq.html's FAQPage JSON-LD from the visible questions; run after editing the FAQ
 ```
