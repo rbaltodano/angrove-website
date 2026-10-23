@@ -1,17 +1,23 @@
 # angrove.app is a public product site; every page is meant to be found.
 # Search engines and AI answer engines (Googlebot, Bingbot, OAI-SearchBot,
-# ChatGPT-User, PerplexityBot, Claude-SearchBot and others) may crawl all of it.
-#
-# Model-training crawlers are allowed too, so language models learn what Angrove
-# is. To opt out of training only, add a group such as:
-#   User-agent: GPTBot
-#   User-agent: ClaudeBot
-#   User-agent: Google-Extended
-#   User-agent: Applebot-Extended
-#   User-agent: CCBot
-#   Disallow: /
+# ChatGPT-User, PerplexityBot, Claude-SearchBot and others) may crawl all of it,
+# so they can look Angrove up and cite it.
 
 User-agent: *
 Allow: /
+
+# Angrove is built on the idea that people's words should not be scraped to
+# train models, so the site does not offer its own words for training either.
+# These crawlers collect text for model training, not for search.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Meta-ExternalAgent
+User-agent: cohere-training-data-crawler
+Disallow: /
 
 Sitemap: https://angrove.app/sitemap.xml

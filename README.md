@@ -48,7 +48,7 @@ Then visit `http://localhost:8000`.
   assets/home/        Images exported from Figma
   assets/brand/       Brand assets, including boot leaf frames and dots from the app
   assets/app/         Real app screenshots and the Study demo video (from Angrove-iOS/Documentation)
-  robots.txt          Allows all crawlers, including AI search and training crawlers; points to the sitemap
+  robots.txt          Allows search and AI answer engines; blocks model-training crawlers; points to the sitemap
   sitemap.xml         Indexable pages (redirect stubs and the bug form are left out); update lastmod when a page changes
   llms.txt            Plain-text product summary and key links for AI tools (an optional convention)
   tools/faq-structured-data.py  Rebuilds faq.html's FAQPage JSON-LD from the visible questions; run after editing the FAQ
