@@ -2761,4 +2761,4 @@ code.cmd, .faq-item__a code.cmd { padding: 4px 10px; border-radius: 8px; backgro
 .demo-guide.is-shown { opacity: 0.4; transform: none; }
 .demo-guide.is-leaving { opacity: 0; transform: none; }
 /* A screen recording of the app window, cropped to it, with the window's corners and shadow. */
-.mac-video { display: block; width: 100%; height: auto; border-radius: 1.2% / 1.9%; background: var(--canvas-dark); box-shadow: 0 30px 60px -28px rgba(18, 15, 12, 0.55), 0 0 0 1px rgba(18, 15, 12, 0.08); }
+.mac-video { display: block; width: 100%; height: auto; border-radius: 1.4% / 2.25%; background: var(--canvas-dark); box-shadow: 0 30px 60px -28px rgba(18, 15, 12, 0.55), 0 0 0 1px rgba(18, 15, 12, 0.08); }
