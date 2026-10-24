@@ -1,8 +1,11 @@
 // Home portfolio card: slides in once the boot screen and entrance have finished, and stays
 // dismissed for this browser after the close button is pressed. CSS hides it below 992px.
+// Turn it on or off with the card's data-enabled attribute in index.html.
 (function () {
   var card = document.querySelector('.portfolio-card');
   if (!card) return;
+  if (card.dataset.enabled !== 'true') { card.remove(); return; }
+  card.hidden = false;
   var KEY = 'angrove.portfolioCardDismissed';
 
   try { if (localStorage.getItem(KEY) === '1') { card.remove(); return; } } catch (e) {}
