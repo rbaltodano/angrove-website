@@ -6,6 +6,9 @@
   if (!card) return;
   if (card.dataset.enabled !== 'true') { card.remove(); return; }
   card.hidden = false;
+  // The link only gets its destination when the card is on, so the page doesn't link out while it's off.
+  var link = card.querySelector('.portfolio-card__link');
+  link.href = link.dataset.href;
   var KEY = 'angrove.portfolioCardDismissed';
 
   try { if (localStorage.getItem(KEY) === '1') { card.remove(); return; } } catch (e) {}
