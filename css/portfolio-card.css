@@ -1,0 +1,67 @@
+/* Home portfolio card: the dark-mode Mac conversation card (MacEditorialCard), floating in the
+   bottom right on desktop and laptop widths. A kind strip and rule sit above the title, preview,
+   and a green footer that ends in the open arrow. Hidden below 992px. */
+.portfolio-card {
+  --card-ink: 255, 250, 240;
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 40;
+  width: 340px;
+  display: none;
+  flex-direction: column;
+  background: #24201C;
+  border: 1px solid rgba(var(--card-ink), 0.08);
+  border-radius: 28px;
+  box-shadow: 0 30px 60px -24px rgba(18, 15, 12, 0.55);
+  font-family: var(--sans);
+  opacity: 0;
+  translate: 0 24px;
+  pointer-events: none;
+  transition: opacity 0.5s ease, translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.portfolio-card.is-shown { opacity: 1; translate: none; pointer-events: auto; }
+@media (min-width: 992px) { .portfolio-card { display: flex; } }
+@media (prefers-reduced-motion: reduce) { .portfolio-card { transition: none; translate: none; } }
+
+.portfolio-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px 8px 28px;
+  font-size: 14px;
+  color: rgba(var(--card-ink), 0.5);
+}
+.portfolio-card__meta svg { width: 16px; height: 16px; flex: none; }
+.portfolio-card__kind { flex: 1; }
+.portfolio-card__close {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(var(--card-ink), 0.5);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.portfolio-card__close:hover { background: rgba(var(--card-ink), 0.08); color: rgb(var(--card-ink)); }
+.portfolio-card__close:focus-visible { outline: 2px solid #B7AE78; outline-offset: 2px; }
+.portfolio-card__close svg { width: 14px; height: 14px; }
+
+.portfolio-card__rule { height: 1px; background: rgba(var(--card-ink), 0.08); }
+
+.portfolio-card__body { display: flex; flex-direction: column; gap: 10px; padding: 28px; }
+.portfolio-card__title { font-family: var(--serif); font-size: 20px; line-height: 1.45; color: rgb(var(--card-ink)); }
+.portfolio-card__preview { font-size: 14px; line-height: 1.75; color: rgba(var(--card-ink), 0.75); }
+.portfolio-card__footer { display: flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 14px; color: #B7AE78; }
+.portfolio-card__footer svg { width: 14px; height: 14px; flex: none; transition: transform 0.2s; }
+
+/* The whole card opens the portfolio; the close button sits above the stretched link. */
+.portfolio-card__link::after { content: ""; position: absolute; inset: 0; border-radius: 28px; }
+.portfolio-card__link:focus-visible { outline: none; }
+.portfolio-card:has(.portfolio-card__link:focus-visible) { outline: 2px solid #B7AE78; outline-offset: 4px; }
+.portfolio-card:hover .portfolio-card__footer svg { transform: translate(2px, -2px); }
