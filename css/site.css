@@ -2702,6 +2702,25 @@ code.cmd, .faq-item__a code.cmd { padding: 4px 10px; border-radius: 8px; backgro
 .mac-shot { width: 108%; margin: 0 -4%; }
 .mac-rows .row__visual { display: block; }
 
+/* js/lightbox.js: a clicked photo or video grows to fill the screen over a darkened page. */
+.lightbox-target {
+  cursor: zoom-in;
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), scale 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lightbox-target.is-hovered { scale: 1.05; }
+.lightbox-target:focus-visible { outline: 2px solid var(--light-green); outline-offset: 4px; }
+.lightbox { position: fixed; inset: 0; z-index: 2147483002; cursor: zoom-out; outline: none; }
+.lightbox__shade {
+  position: absolute; inset: 0; background: rgba(18, 15, 12, 0.86);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.lightbox__media { transform: none; scale: none; transition: none; cursor: zoom-out; }
+/* Under the media: its heading and a line about it. */
+.lightbox__caption { position: fixed; translate: -50% 0; text-align: center; color: var(--cream); pointer-events: none; }
+.lightbox__title { margin: 0 0 6px; font: 400 22px/1.3 var(--serif); letter-spacing: -0.01em; color: var(--cream); }
+.lightbox__text { margin: 0; font: 400 15px/1.55 var(--sans); color: rgba(255, 250, 240, 0.68); }
+
 /* Home: the Mac teaser, one window and a link to the Mac page. */
 .mac-teaser { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 64px; }
 .mac-teaser__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
