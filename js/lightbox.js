@@ -1,8 +1,10 @@
 // Photos and videos open larger: clicked (or Return/Space when focused), one grows from its place
 // to fill the screen while the page darkens behind it. A click, Esc, or scrolling sends it back.
 // The element itself moves into the lightbox, so a video keeps playing; a video that has finished
-// plays again. Decorative images (empty alt) and the nav and footer are left alone.
-// Under it sit its heading and a line about it, from data-caption-title and data-caption.
+// plays again. Decorative images (empty alt), the nav and footer, links elsewhere, and anything
+// marked data-no-lightbox are left alone; an image linked to its own file opens here instead.
+// Under it sit its heading and a line about it: data-caption-title and data-caption, else the
+// figure's caption when the figure holds only this media, else its alt text.
 // On hover (mouse or trackpad) each one grows 5% and turns slightly to face the cursor.
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -13,19 +15,31 @@
   var OPEN_MS = reduce ? 0 : 600, CLOSE_MS = reduce ? 0 : 600, FADE_MS = reduce ? 0 : 450;
   var TILT = 4;   // degrees at the edges: subtle
 
+  var IMAGE_FILE = /\.(jpe?g|png|webp|gif|avif)([?#]|$)/i;
   var media = Array.prototype.filter.call(document.querySelectorAll('img, video'), function (m) {
-    return m.getAttribute('alt') !== '' && !m.closest('.nav, .footer, [aria-hidden="true"]');
+    if (m.getAttribute('alt') === '' || m.closest('.nav, .footer, [aria-hidden="true"], [data-no-lightbox], button')) return false;
+    var link = m.closest('a');
+    return !link || IMAGE_FILE.test(link.getAttribute('href') || '');
   });
   if (!media.length) return;
 
   media.forEach(function (m) {
     m.classList.add('lightbox-target');
-    m.tabIndex = 0;
-    m.setAttribute('role', 'button');
-    m.addEventListener('click', function (e) { if (!shown) { open(m); shown.openedBy = e; } });
-    m.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m); }
-    });
+    var link = m.closest('a');
+    if (link) {
+      // The link stays the keyboard stop; its click opens the image here rather than leaving.
+      link.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || shown) return;
+        if (open(m)) { e.preventDefault(); shown.openedBy = e; }
+      });
+    } else {
+      m.tabIndex = 0;
+      m.setAttribute('role', 'button');
+      m.addEventListener('click', function (e) { if (open(m)) shown.openedBy = e; });
+      m.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m); }
+      });
+    }
     if (!reduce) {
       m.addEventListener('pointermove', function (e) { tilt(m, e); });
       m.addEventListener('pointerleave', function () { untilt(m); });
@@ -51,15 +65,19 @@
   var shown = null;   // { media, placeholder, scrim, style, offset, rect, focus }
 
   function open(m) {
-    if (shown) return;
+    if (shown) return false;
     var rect = m.getBoundingClientRect();
-    // Where it rests, without the hover's lift and tilt: where it returns to on close.
+    if (rect.width < 120 || rect.height < 80) return false;   // hidden or too small to need it
+    // Where it rests, without the hover's lift and tilt: where it returns to on close. The
+    // transition is held off so this reads the resting place, not the hover mid-animation.
+    m.style.setProperty('transition', 'none', 'important');
     m.style.setProperty('transform', 'none', 'important');
     m.style.setProperty('scale', 'none', 'important');
     var rest = m.getBoundingClientRect();
+    untilt(m);
     m.style.removeProperty('transform');
     m.style.removeProperty('scale');
-    untilt(m);
+    m.style.removeProperty('transition');
     var cs = getComputedStyle(m);
     var MARGIN = margin();
 
@@ -77,6 +95,15 @@
     // The caption is measured first so the media fits the room it leaves.
     var caption = null, room = 0;
     var title = m.getAttribute('data-caption-title'), about = m.getAttribute('data-caption');
+    if (!title && !about) {
+      var figure = m.closest('figure'), figcaption = figure && figure.querySelector('figcaption');
+      if (figcaption && figure.querySelectorAll('img, video').length === 1) {
+        var head = figcaption.querySelector('h1, h2, h3, h4, h5, h6'), line = figcaption.querySelector('p');
+        title = head && head.textContent.trim();
+        about = line && line.textContent.trim();
+      }
+      if (!title && !about) about = m.getAttribute('alt') || m.getAttribute('aria-label');
+    }
     if (title || about) {
       caption = document.createElement('div');
       caption.className = 'lightbox__caption';
@@ -110,7 +137,9 @@
       ';width:' + m.offsetWidth + 'px;height:' + m.offsetHeight + 'px;margin:' + cs.margin + ';vertical-align:' + cs.verticalAlign;
 
     var style = m.getAttribute('style');
-    var radius = cs.borderRadius, fit = cs.objectFit;
+    var fit = cs.objectFit;
+    // Corners set in px grow with it, so a phone recording keeps its shape.
+    var radius = /%/.test(cs.borderRadius) ? cs.borderRadius : cs.borderRadius.replace(/[\d.]+px/g, function (v) { return parseFloat(v) * scale + 'px'; });
     m.replaceWith(placeholder);    // moved in one task, so a playing video doesn't pause
     scrim.appendChild(m);
     var pr = placeholder.getBoundingClientRect();
@@ -137,6 +166,7 @@
       var playing = m.play();
       if (playing && playing.catch) playing.catch(function () {});
     }
+    return true;
   }
 
   function text(tag, cls, value) {
