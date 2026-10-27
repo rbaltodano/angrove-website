@@ -12,7 +12,10 @@
 //   that wraps onto another line doesn't push the rest of the section down.
 // - Option-drag moves the box around the one under the pointer. ⌘Z undoes.
 // - Whenever the page is off its default layout, a Reset button waits at the bottom left.
+// - It needs a mouse or trackpad: on a touch screen a drag scrolls the page, so the editor stays off
+//   on touch-only devices and ignores touches elsewhere.
 (function () {
+  if (window.matchMedia('(hover: none)').matches) return;
   var KEY = 'angrove-layout:' + location.pathname;
   var SNAP = 6, OVERHANG = 12, MIN = 24;
   var REVEAL = 48, FEATHER = 24;   // spotlight radius and its soft edge, as WorktreeTextBoxResize
@@ -286,7 +289,10 @@
     e.stopPropagation();
   }, true);
 
+  function isTouch(e) { return e.pointerType === 'touch'; }
+
   window.addEventListener('pointermove', function (e) {
+    if (isTouch(e)) return;
     pointer = { x: e.clientX, y: e.clientY };
     if (gesture) { e.preventDefault(); gesture.move(e); return; }
     // Over a resize handle, keep its box.
@@ -299,19 +305,22 @@
 
   window.addEventListener('pointerdown', function (e) {
     swallowClick = false;
-    if (isUI(e.target) || e.button !== 0) return;
+    if (isUI(e.target) || e.button !== 0 || isTouch(e)) return;
     var target = editableFrom(e.target);
     if (target && e.altKey) target = editableFrom(target.parentElement) || target;
     if (target) gesture = moveGesture(target, e);
   }, true);
 
-  window.addEventListener('pointerup', function () {
+  // A cancelled pointer (the browser took it over to scroll) ends the gesture like a release.
+  function endGesture() {
     if (!gesture) return;
     gesture.end();
     gesture = null;
     active = null;
     clearGuides();
-  }, true);
+  }
+  window.addEventListener('pointerup', endGesture, true);
+  window.addEventListener('pointercancel', endGesture, true);
 
   window.addEventListener('keydown', function (e) {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName)) return;
