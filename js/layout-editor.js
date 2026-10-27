@@ -1,6 +1,5 @@
-// Layout editor for mac.html, local testing only: move, resize and align the page's boxes,
-// headings and text the way a Board does in the Mac app. Runs only on localhost or file:, so it stays off
-// angrove.app even if it is published. Edits are kept per page in this browser.
+// Layout editor for mac.html: move, resize and align the page's boxes, headings and text the way
+// a Board does in the Mac app. Edits are kept per page in this browser.
 //
 // Like a Board, the page is always editable:
 // - Drag a box, heading or paragraph to move it. Its left, centre or right (and top, centre or bottom) snap to
@@ -14,11 +13,6 @@
 // - Option-drag moves the box around the one under the pointer. ⌘Z undoes.
 // - Whenever the page is off its default layout, a Reset button waits at the bottom left.
 (function () {
-  var host = location.hostname;
-  var local = location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1' ||
-    host === '[::1]' || /\.(localhost|test|local)$/.test(host);
-  if (!local) return;
-
   var KEY = 'angrove-layout:' + location.pathname;
   var SNAP = 6, OVERHANG = 12, MIN = 24;
   var REVEAL = 48, FEATHER = 24;   // spotlight radius and its soft edge, as WorktreeTextBoxResize
