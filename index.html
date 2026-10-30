@@ -122,7 +122,7 @@
 <link rel="preload" as="image" href="assets/brand/boot-leaf.webp">
 <link rel="preload" as="image" href="assets/brand/boot-dots.svg">
 <script src="js/boot-assets.js?v=20261006-masthead-clean"></script>
-<link rel="stylesheet" href="css/site.css?v=20261026-lightbox">
+<link rel="stylesheet" href="css/site.css?v=20261026-pillar-cards">
 <link rel="stylesheet" href="css/portfolio-card.css?v=20261024">
 <noscript><style>img[data-boot-src] { display: none !important; }</style></noscript>
 <script type="application/ld+json">
@@ -282,33 +282,47 @@
           <p class="para">Human thought is increasingly scraped, analyzed, and stored by tech companies to sell and train off of. Because of this, the questions that matter most about meaning, existence, and truth, are often too personal to ask openly, so they go unexamined. Angrove is built on three commitments to give them somewhere safe to go.</p>
         </div>
       </div>
-      <ol class="pillars">
-        <li class="pillar">
-          <div class="pillar__top">
-            <span class="pillar__num" aria-hidden="true">I</span>
-            <h3>Privacy</h3>
+      <!-- The three commitments as the app's editorial cards (MacEditorialCard): a kind strip, a
+           rule, the claim and its paragraph, and a green footer that opens more. -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="pc-lock-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.6v5.6c0 4.8 3.2 8.5 7.5 10 4.3-1.5 7.5-5.2 7.5-10V5.6z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.2 11V9.5a1.8 1.8 0 0 1 3.6 0V11"/></symbol>
+        <symbol id="pc-brain-head-profile" viewBox="0 0 24 24"><path d="M9 21v-3.2c-2.3-1.4-3.8-3.8-3.8-6.6A7.3 7.3 0 0 1 12.5 4c3.8 0 6.6 2.7 6.9 6.2l1.8 3.6-1.9.8V17a2 2 0 0 1-2 2h-1.8v2"/><path d="M10.5 9.2a2 2 0 0 1 3.8-.4 1.9 1.9 0 0 1 .4 3.6M12 12.5v2"/></symbol>
+        <symbol id="pc-bubbles" viewBox="0 0 24 24"><path d="M3 5.5a2 2 0 0 1 2-2h8.5a2 2 0 0 1 2 2V11a2 2 0 0 1-2 2H8l-3.5 3v-3H5a2 2 0 0 1-2-2z"/><path d="M18 8h1a2 2 0 0 1 2 2v5.5a2 2 0 0 1-2 2h-.5v3L15 17.5h-4a2 2 0 0 1-2-2V15"/></symbol>
+        <symbol id="pc-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></symbol>
+      </svg>
+      <ol class="pillar-cards">
+        <li class="pillar-card">
+          <div class="pillar-card__meta">
+            <span class="pillar-card__kind"><svg class="ic" aria-hidden="true"><use href="#pc-lock-shield"/></svg><h3>Privacy</h3></span>
+            <span class="pillar-card__num" aria-hidden="true">I</span>
           </div>
-          <p class="pillar__claim">Built so your questions stay on your phone.</p>
-          <p class="para">Angrove is built to run Google’s Gemma 4 model entirely on your iPhone. There’s no server reading your questions and no cloud storing your conversations. Saved personal data is encrypted on your device and answers run offline.</p>
-          <p class="pillar__proof">On-device <span aria-hidden="true">·</span> Encrypted <span aria-hidden="true">·</span> Works offline</p>
+          <div class="pillar-card__body">
+            <p class="pillar-card__title">Built so your questions stay on your phone.</p>
+            <p class="pillar-card__text">Angrove is built to run Google’s Gemma 4 model entirely on your iPhone. There’s no server reading your questions and no cloud storing your conversations. Saved personal data is encrypted on your device and answers run offline.</p>
+            <a class="pillar-card__foot" href="privacy.html" aria-label="Privacy: read the privacy policy">On-device <span aria-hidden="true">·</span> Encrypted <span aria-hidden="true">·</span> Works offline<svg class="ic" aria-hidden="true"><use href="#pc-arrow"/></svg></a>
+          </div>
         </li>
-        <li class="pillar">
-          <div class="pillar__top">
-            <span class="pillar__num" aria-hidden="true">II</span>
-            <h3>Performance</h3>
+        <li class="pillar-card">
+          <div class="pillar-card__meta">
+            <span class="pillar-card__kind"><svg class="ic" aria-hidden="true"><use href="#pc-brain-head-profile"/></svg><h3>Performance</h3></span>
+            <span class="pillar-card__num" aria-hidden="true">II</span>
           </div>
-          <p class="pillar__claim">Real Reasoning in Your Pocket</p>
-          <p class="para">Grounded in a curated library of texts and cites its sources, so your most difficult questions get careful answers, and it says so when a source is missing rather than inventing a quotation.</p>
-          <p class="pillar__proof">Gemma 4 <span aria-hidden="true">·</span> Curated library</p>
+          <div class="pillar-card__body">
+            <p class="pillar-card__title">Real Reasoning in Your Pocket</p>
+            <p class="pillar-card__text">Grounded in a curated library of texts and cites its sources, so your most difficult questions get careful answers, and it says so when a source is missing rather than inventing a quotation.</p>
+            <a class="pillar-card__foot" href="faq.html" aria-label="Performance: questions about the model">Gemma 4 <span aria-hidden="true">·</span> Curated library<svg class="ic" aria-hidden="true"><use href="#pc-arrow"/></svg></a>
+          </div>
         </li>
-        <li class="pillar">
-          <div class="pillar__top">
-            <span class="pillar__num" aria-hidden="true">III</span>
-            <h3>Personalization</h3>
+        <li class="pillar-card">
+          <div class="pillar-card__meta">
+            <span class="pillar-card__kind"><svg class="ic" aria-hidden="true"><use href="#pc-bubbles"/></svg><h3>Personalization</h3></span>
+            <span class="pillar-card__num" aria-hidden="true">III</span>
           </div>
-          <p class="pillar__claim">It Asks Back</p>
-          <p class="para">Angrove does more than answer. It prompts you to go deeper and connect the ideas you keep, so your understanding builds over time to facilitate true understanding.</p>
-          <p class="pillar__proof">Insight Tree <span aria-hidden="true">·</span> Study</p>
+          <div class="pillar-card__body">
+            <p class="pillar-card__title">It Asks Back</p>
+            <p class="pillar-card__text">Angrove does more than answer. It prompts you to go deeper and connect the ideas you keep, so your understanding builds over time to facilitate true understanding.</p>
+            <a class="pillar-card__foot" href="guide.html" aria-label="Personalization: read the User Guide">Insight Tree <span aria-hidden="true">·</span> Study<svg class="ic" aria-hidden="true"><use href="#pc-arrow"/></svg></a>
+          </div>
         </li>
       </ol>
     </div>
