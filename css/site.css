@@ -638,32 +638,30 @@ a { color: inherit; text-decoration: none; transition: color 0.25s ease, border-
   color: var(--paragraph-dim);
 }
 
-/* What Angrove Stands On, as the app's editorial cards (MacEditorialCard) in its dark mode: a kind
-   strip in placeholder cream, a rule, the claim and its paragraph, and a green footer ending in an
-   arrow. canvasSecondary #24201C, a 1px cream border at 8%, 28px corners. The whole card opens its
-   footer link. */
+/* What Angrove Stands On: light editorial cards with cream surfaces, brown text,
+   a ruled kind strip, and an olive footer. The whole card opens its footer link. */
 .pillar-cards { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .pillar-card {
   position: relative; display: flex; flex-direction: column; min-height: 400px;
-  background: var(--app-canvas-secondary-dark); border: 1px solid rgba(255, 250, 240, 0.08); border-radius: 28px;
+  background: var(--canvas-secondary); border: 1px solid var(--border); border-radius: 28px;
   transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), translate 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.pillar-card:hover { translate: 0 -2px; box-shadow: 0 22px 44px -22px rgba(18, 15, 12, 0.55); }
+.pillar-card:hover { translate: 0 -2px; box-shadow: 0 22px 44px -22px rgba(74, 50, 28, 0.18); }
 .pillar-card__meta {
   display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 52px; padding: 0 22px 0 28px;
-  border-bottom: 1px solid rgba(255, 250, 240, 0.08);
-  font: 400 14px/1.4 var(--sans); color: rgba(255, 250, 240, 0.5);
+  border-bottom: 1px solid var(--border);
+  font: 400 14px/1.4 var(--sans); color: var(--paragraph);
 }
 .pillar-card__kind { display: inline-flex; align-items: center; gap: 6px; }
 .pillar-card__kind h3 { margin: 0; font: inherit; color: inherit; letter-spacing: 0; text-transform: none; }
 .pillar-card__kind .ic { font-size: 16px; }
 .pillar-card__num { font-family: var(--serif); font-size: 14px; }
 .pillar-card__body { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 28px; }
-.pillar-card__title { margin: 0; font: 400 22px/1.4 var(--serif); letter-spacing: -0.01em; color: var(--cream); }
-.pillar-card__text { margin: 0; font: 400 15px/1.75 var(--sans); color: rgba(255, 250, 240, 0.75); }
+.pillar-card__title { margin: 0; font: 400 22px/1.4 var(--serif); letter-spacing: -0.01em; color: var(--heading); }
+.pillar-card__text { margin: 0; font: 400 15px/1.75 var(--sans); color: var(--paragraph); }
 .pillar-card__foot {
   margin-top: auto; padding-top: 16px; display: inline-flex; align-items: center; gap: 6px;
-  font: 400 14px/1.4 var(--sans); color: var(--dark-green-text); text-decoration: none;
+  font: 400 14px/1.4 var(--sans); color: #68632F; text-decoration: none;
 }
 .pillar-card__foot .ic { font-size: 15px; transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
 .pillar-card:hover .pillar-card__foot .ic { translate: 2px -2px; }
